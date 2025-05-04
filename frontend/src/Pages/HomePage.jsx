@@ -7,6 +7,7 @@ import Product from '../Components/Product'
 import Brands from '../Components/Brands'
 import CategoryImages from '../Components/CategoryImages'
 import Footer from '../Components/footer'
+import { Link } from "react-router";
 
 export default function HomePage() {
   const [hide, ishidden] = useState(true)
