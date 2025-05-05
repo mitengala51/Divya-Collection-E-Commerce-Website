@@ -1,0 +1,28 @@
+.lc{
+    color: #444;
+}
+
+.form-control{
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+}
+
+/* .seperator{
+    width: 100%;
+    border-bottom: 1px solid #444;
+    text-align: center;
+    margin: 0 10px 0 10px;
+} */
+
+.seperator{
+    border-bottom: 1px solid #aaa;
+    text-align: center;
+    line-height: 0.1em;
+}
+
+.seperator span{
+    background-color: white;
+    padding: 5px;
+    color: #aaa;
+}

@@ -3,10 +3,9 @@ import HomePage from "./Pages/HomePage";
 import ProductDetailPage from "./Pages/ProductDetailPage";
 import Demo from "./Pages/Demo";
 import ShoppingCartPage from "./Pages/ShoppingCartPage";
-import { useState } from "react";
+import CompleteProfilePage from "./Pages/CompleteProfilePage";
 
 function App() {
-  const [productId, setProductId] = useState('');
 
   return (
     <>
@@ -20,6 +19,7 @@ function App() {
           element={<ProductDetailPage />}
         />
         <Route path="/shopping-cart" element={<ShoppingCartPage />} />
+        <Route path="/complete-profile" element={<CompleteProfilePage />} />
         <Route path="/demo" element={<Demo />} />
       </Routes>
     </>

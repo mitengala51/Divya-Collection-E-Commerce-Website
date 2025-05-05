@@ -33,6 +33,9 @@ const UserSchema = new mongoose.Schema({
   name: String,
   phone_number: Number,
   address: String,
+  city: String,
+  state: String,
+  zip_code: Number
   // username: String
 });
 
@@ -64,7 +67,7 @@ const razorpay = new Razorpay({
 app.get("/api/all-products", async (req, res) => {
   try {
     const all_products = await Product.find({});
-    console.log(all_products);
+    // console.log(all_products);
     res.status(200).json({ all_products });
   } catch (err) {
     console.log(err);
@@ -156,9 +159,10 @@ app.post("/verify-payment", async (req, res) => {
 
 app.post("/api/login", async (req, res) => {
   try {
-    const { username, Inputpassword } = req.body;
-    console.log(username, Inputpassword);
-    const user = await User.find({ username: username });
+    const { email, Inputpassword } = req.body;
+    console.log(email, Inputpassword);
+    const user = await User.find({ email: email });
+    console.log(user)
     console.log(user.length);
 
     if (user.length == 0) {
@@ -166,16 +170,18 @@ app.post("/api/login", async (req, res) => {
       res.status(404).json({ message: "User not found" });
     }
 
-    const HashedPassword = await User.find({ password: Inputpassword });
+    const HashedPassword = user[0].password
     const password = await bcrypt.compare(Inputpassword, HashedPassword);
+
+    console.log(password)
 
     if (password) {
       res.status(200).json({ message: "Login Successfull" });
-    } else {
-      res.status(400).json({ message: "Login Fail" });
+    } else if(!password){
+      res.status(400).json({ message: "Password didn't match" });
     }
   } catch (error) {
-    res.json({ error });
+    // res.stajson({ error });
   }
 });
 
@@ -183,14 +189,30 @@ app.post("/api/login", async (req, res) => {
 
 app.post('/api/sign-up', async (req,res)=>{
   try {
-    const { first_name , last_name, email , password } = req.body;
-  console.log( first_name , last_name, email , password )
-  await User.create({ first_name , last_name, email , password })
+    const { email , password } = req.body;
+  console.log( email , password )
+  const HashedPassword = await bcrypt.hash(password, 10)
+  await User.create({ email , password: HashedPassword })
 
-  res.json({message: 'Account create successfully'})
+  res.status(200).json({message: 'Account create successfully'})
   } catch (error) {
     console.log(error)
     res.json({error: error})
+  }
+
+})
+
+// Complete Profile endpoints
+
+app.post('/api/complete-profile', async (req,res)=>{
+
+  try {
+  const { first_name, last_name, phone_number, address_1, address_2, city, state, zip_code, email } = req.body
+  console.log(first_name, last_name, phone_number, address_1, address_2, city, state, zip_code, email)
+  await User.findOneAndUpdate({email}, { first_name, last_name, phone_number, address_1, address_2, city, state, zip_code })
+  res.status(200).json({ message: 'Profile Completed' })
+  } catch (error) {
+    console.log(error)
   }
 
 })

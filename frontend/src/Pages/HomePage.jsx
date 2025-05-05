@@ -7,21 +7,21 @@ import Product from '../Components/Product'
 import Brands from '../Components/Brands'
 import CategoryImages from '../Components/CategoryImages'
 import Footer from '../Components/footer'
-import { Link } from "react-router";
+import AuthModal from './Demo'
 
 export default function HomePage() {
-  const [hide, ishidden] = useState(true)
+
   return (
     <div>
         <Navbar />
         <Carousel />
-        <Cards title="SHOP BY BRAND" hide={hide}/>
+        <Cards title="SHOP BY BRAND" hide={true}/>
         <Brands />
         <Cards title="NEW ARRIVAL"/>
         <Product />
         <Cards title="BEST SELLING"/> 
         <Product />
-        <Cards title="CATEGORY" hide={hide}/>
+        <Cards title="CATEGORY" hide={true}/>
         <CategoryImages />
         <Footer />
     </div>

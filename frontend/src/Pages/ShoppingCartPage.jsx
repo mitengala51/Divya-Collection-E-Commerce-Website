@@ -4,13 +4,11 @@ import Footer from "../Components/footer";
 import CartProduct from "../Components/CartProduct";
 import TotalCartTable from "../Components/TotalCartTable";
 import axios from "axios";
-import toast, { Toaster } from 'react-hot-toast';
 
 export default function ShoppingCartPage() {
 
     const [cartItems, setCartItems] = useState([])
     const [totalPrice, setTotalPrice] = useState([])
-    var totalCost = 0
 
     useEffect(()=>{
       async function fetchdata(){
@@ -19,16 +17,6 @@ export default function ShoppingCartPage() {
         console.log(data.data.all_cart_items)
         console.log(data.data.all_cart_items.length)
         setCartItems(data.data.all_cart_items)
-
-        // const cost = data.data.all_cart_items.reduce((accumulator, item)=>{
-        //   console.log(accumulator)
-        //   console.log(item.price)
-        //   accumulator + item.price,
-        //   0
-        //   // return accumulator.price += item.price
-        // })
-
-        // console.log(cost)
 
         const cost = data.data.all_cart_items.reduce((accumulator, item)=>accumulator + item.price,0)
 
