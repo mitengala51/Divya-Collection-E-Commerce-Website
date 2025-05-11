@@ -14,7 +14,9 @@ export default function ShoppingCartPage() {
     useEffect(()=>{
       async function fetchdata(){
         try {
-        const data = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/cart-items`)
+        const data = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/cart-items`,{
+          withCredentials: true
+        })
         setCartItems(data.data.all_cart_items)
         const cost = data.data.all_cart_items.reduce((accumulator, item)=>accumulator + item.price,0)
         setTotalPrice(cost)

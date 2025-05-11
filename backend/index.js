@@ -31,6 +31,7 @@ const ProductSchema = new mongoose.Schema({
 
 const CartSchema = new mongoose.Schema({
   id: String,
+  userID: String,
   title: String,
   price: Number,
   category: String,
@@ -72,8 +73,8 @@ app.use(cookieParser())
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
 
-function verifyToken(req,res,next){
-  const token = req.cookie.token
+async function verifyToken(req,res,next){
+  const token = await req.cookies.token
 
   if(!token){
     res.status(404).json({ message: 'Token not found' })
@@ -82,9 +83,10 @@ function verifyToken(req,res,next){
   try {
     const decoded = jwt.verify(token, JWT_SECRET_KEY)
     req.user = decoded
-    res.status(200).json({ message: 'User Authenticated', user_id: decoded._id, user_full_name: decoded.full_name })
+    // res.status(200).json({ message: 'User Authenticated', user_id: decoded._id, user_full_name: decoded.full_name })
   } catch (error) {
-    res.status(401).json({ message: 'Invalid or expired token' });
+    // res.status(401).json({ message: 'Invalid or expired token' });
+    console.log(error)
   }
 
   next()
@@ -124,12 +126,12 @@ app.get("/api/all-products/:id", async (req, res) => {
 
 // Add to Cart
 
-app.post('/api/add-to-cart' ,async (req,res)=>{
+app.post('/api/add-to-cart', verifyToken ,async (req,res)=>{
   try {
-    // console.log(req.user)
+  console.log(req.user)
   const { id, title, price, brand, size, category, image_url } = req.body;
   console.log(id, title, price, brand, size, category, image_url)
-  await Cart.create( { id, title, price, brand, size, category, image_url })
+  await Cart.create( { id, userID: req.user._id , title, price, brand, size, category, image_url })
   res.json({message: 'Added to cart'})
   } catch (error) {
     console.log(error)
@@ -138,9 +140,9 @@ app.post('/api/add-to-cart' ,async (req,res)=>{
 
 // All Add to Cart items 
 
-app.get('/api/cart-items', async (req,res)=>{
+app.get('/api/cart-items', verifyToken ,async (req,res)=>{
   try {
-  const all_cart_items = await Cart.find({})
+  const all_cart_items = await Cart.find({userID: req.user._id})
   res.json({message: 'All carts products recieved', all_cart_items})
   } catch (error) {
     console.log(error)
@@ -286,7 +288,7 @@ app.post('/api/google-login', async (req,res)=>{
   res.cookie('token', token, {
     httpOnly: true,
     maxAge: 3600000,
-    secure: false
+    secure: false,
   })
   res.status(200).json({ message: 'Login Successfull' })
 })
