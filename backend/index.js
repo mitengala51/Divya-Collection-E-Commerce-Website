@@ -299,8 +299,8 @@ app.post('/api/google-signup', async (req,res)=>{
 })
 
 // Logout
-app.post('/api/Logout', verifyToken  ,(req,res)=>{
-  console.log(req.user)
+app.post('/api/Logout' ,(req,res)=>{
+  // console.log(req.user)
   res.clearCookie('token');
   res.status(200).json({ message: 'User Logged Out Successfully' })
 })

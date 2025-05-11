@@ -11,7 +11,7 @@ import toast, { Toaster } from "react-hot-toast";
 export default function Navbar() {
 
     const [open, setOpen] = React.useState(false);
-      const [loggedIn, setLoggedIn] = React.useState(false)
+    const [loggedIn, setLoggedIn] = React.useState(false)
 
       const notify = (message) => toast.success(message);
 
