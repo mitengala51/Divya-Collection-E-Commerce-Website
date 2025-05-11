@@ -9,29 +9,21 @@ export default function ShoppingCartPage() {
 
     const [cartItems, setCartItems] = useState([])
     const [totalPrice, setTotalPrice] = useState([])
+    const [cartDeleted, setCartDeleted] = useState(false)
 
     useEffect(()=>{
       async function fetchdata(){
         try {
-        const data = await axios.get('http://localhost:3000/api/cart-items')
-        console.log(data.data.all_cart_items)
-        console.log(data.data.all_cart_items.length)
+        const data = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/cart-items`)
         setCartItems(data.data.all_cart_items)
-
         const cost = data.data.all_cart_items.reduce((accumulator, item)=>accumulator + item.price,0)
-
-        console.log(cost)
-
         setTotalPrice(cost)
-
         } catch (error) {
-          
+          console.log(error)
         }
-
       }
-
       fetchdata()
-    },[])
+    },[cartDeleted])
 
   return (
     <div>
@@ -45,7 +37,7 @@ export default function ShoppingCartPage() {
         <div className="row">
           <div className="col-lg-8">
             {cartItems.map((data)=>{
-              return  <CartProduct key={data.id} title={data.title} price={data.price} brand={data.brand} image_url={data.image_url}/>
+              return  <CartProduct key={data.id} id={data.id} title={data.title} price={data.price} brand={data.brand} image_url={data.image_url} setCartDeleted={setCartDeleted} totalPrice={totalPrice} setTotalPrice={setTotalPrice}/>
             })}
             </div>
           <div className="col-lg-4">

@@ -4,6 +4,8 @@ import ProductDetailPage from "./Pages/ProductDetailPage";
 import Demo from "./Pages/Demo";
 import ShoppingCartPage from "./Pages/ShoppingCartPage";
 import CompleteProfilePage from "./Pages/CompleteProfilePage";
+import AboutUsPage from "./Pages/AboutUsPage";
+import ContactUsPage from "./Pages/ContactUsPage";
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
         />
         <Route path="/shopping-cart" element={<ShoppingCartPage />} />
         <Route path="/complete-profile" element={<CompleteProfilePage />} />
+        <Route path="/About-Us" element={<AboutUsPage />} />
+        <Route path="/Contact-Us" element={<ContactUsPage />} />
         <Route path="/demo" element={<Demo />} />
       </Routes>
     </>

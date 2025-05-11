@@ -1,15 +1,5 @@
 import React from 'react'
-import b1 from '../assets/tory-burch.svg'
-import b2 from '../assets/prada.svg'
-import b3 from '../assets/louis-vuitton-1.svg'
-import b4 from '../assets/gucci.svg'
 import Marquee from "react-fast-marquee";
-import Box from '@mui/joy/Box';
-import Card from '@mui/joy/Card';
-import CardCover from '@mui/joy/CardCover';
-import CardContent from '@mui/joy/CardContent';
-import Typography from '@mui/joy/Typography';
-
 import l1 from '../assets/Logo Images/l_1.png'
 import l2 from '../assets/Logo Images/l_2.png'
 import l3 from '../assets/Logo Images/l_3.png'

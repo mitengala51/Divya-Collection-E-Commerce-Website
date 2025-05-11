@@ -7,6 +7,7 @@ import toast, { Toaster } from 'react-hot-toast';
 export default function CompleteProfile() {
 
   const [profile, setProfile] = useState({
+    full_name: '',
     first_name: "",
     last_name: "",
     phone_number: "",
@@ -86,8 +87,9 @@ export default function CompleteProfile() {
           e.preventDefault();
 
     const response = await axios.post(
-      "http://localhost:3000/api/complete-profile",
+      `${import.meta.env.VITE_REACT_APP_API_URL}/api/complete-profile`,
       {
+        full_name: profile.first_name + " " + profile.last_name,
         first_name: profile.first_name,
         last_name: profile.last_name,
         phone_number: profile.phone_number,

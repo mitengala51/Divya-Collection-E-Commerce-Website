@@ -8,6 +8,7 @@ import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 const style = {
   position: "absolute",
@@ -22,11 +23,14 @@ const style = {
   p: 4,
 };
 
-export default function LoginModal({ open, handleClose }) {
+export default function LoginModal({ open, handleClose, setLoggedIn }) {
   const [isLogin, setLogin] = React.useState(true);
+  // const [loggedIn, setLoggedIn] = React.useState(false)
+
   let navigate = useNavigate();
 
   const notify = (message) => toast.error(message);
+  const success = (message) => toast.success(message);
 
   const [LoginForm, setLoginForm] = React.useState({
     email: "",
@@ -72,14 +76,17 @@ export default function LoginModal({ open, handleClose }) {
         return notify("Please enter your password");
       }
 
-      const response = await axios.post("http://localhost:3000/api/login", {
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/login`, {
         email: LoginForm.email,
         Inputpassword: LoginForm.password,
+      },{
+        withCredentials: true
       });
 
       if (response.status == 200) {
-        console.log(response);
+        success(response.data.message)
         handleClose();
+        setLoggedIn(true)
       }
     } catch (error) {
       if (error.status == 400) {
@@ -133,7 +140,7 @@ export default function LoginModal({ open, handleClose }) {
       }
 
       if (SignUpForm.password == SignUpForm.confirm_password) {
-        const response = await axios.post("http://localhost:3000/api/sign-up", {
+        const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/sign-up`, {
           email: SignUpForm.email,
           password: SignUpForm.password,
         });
@@ -230,14 +237,37 @@ export default function LoginModal({ open, handleClose }) {
                 Google
               </button> */}
               <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  console.log(credentialResponse);
+                onSuccess={async (credentialResponse) => {
+                  try {
+                    const credential = jwtDecode(credentialResponse.credential);
+                    const response = await axios.post(
+                      `${import.meta.env.VITE_REACT_APP_API_URL}/api/google-login`,
+                      {
+                        name: credential.name,
+                        email: credential.email,
+                      },
+                      {
+                        withCredentials: true
+                      }
+                    );
+
+                    if(response.status == 200){
+                      success(response.data.message)
+                      handleClose()
+                      setLoggedIn(true)
+                    }
+                  } catch (error) {
+                    console.log(error)
+                    if (error.status == 404) {
+                      notify(error.response.data.message);
+                    }
+                  }
                 }}
                 onError={() => {
                   console.log("Login Failed");
                 }}
               />
-      
+
               <p className="mb-1 mt-3 text-center">
                 Dont have an account?{" "}
                 <Link
@@ -312,8 +342,13 @@ export default function LoginModal({ open, handleClose }) {
                 Google
               </button> */}
               <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                  console.log(credentialResponse);
+                onSuccess={async (credentialResponse) => {
+                  const credential = jwtDecode(credentialResponse.credential);
+                  await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/google-signup`, {
+                    name: credential.name,
+                    email: credential.email,
+                  });
+                  navigate("/complete-profile");
                 }}
                 onError={() => {
                   console.log("Login Failed");

@@ -3,6 +3,11 @@ import Razorpay from "razorpay";
 import cors from "cors";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken'
+import cookieParser from "cookie-parser";
+
+dotenv.config()
 
 mongoose
   .connect(
@@ -24,21 +29,6 @@ const ProductSchema = new mongoose.Schema({
   image_url: String,
 });
 
-const UserSchema = new mongoose.Schema({
-  // user_id: String,
-  first_name: String,
-  last_name: String,
-  email: String,
-  password: String,
-  name: String,
-  phone_number: Number,
-  address: String,
-  city: String,
-  state: String,
-  zip_code: Number
-  // username: String
-});
-
 const CartSchema = new mongoose.Schema({
   id: String,
   title: String,
@@ -49,17 +39,61 @@ const CartSchema = new mongoose.Schema({
   image_url: String,
 })
 
+const UserSchema = new mongoose.Schema({
+  // user_id: String,
+  full_name: String,
+  first_name: String,
+  last_name: String,
+  email: String,
+  password: String,
+  name: String,
+  phone_number: Number,
+  address: String,
+  city: String,
+  state: String,
+  zip_code: Number,
+  Google_Login: Boolean,
+  // username: String
+  // cart: [CartSchema]
+});
+
+
 const Product = mongoose.model("Products", ProductSchema, "Products");
 const User = mongoose.model("Users", UserSchema, "Users");
 const Cart = mongoose.model("Cart", CartSchema, "Cart");
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173', 
+  credentials: true                 
+}));
 app.use(express.json());
+app.use(cookieParser())
+
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY
+
+function verifyToken(req,res,next){
+  const token = req.cookie.token
+
+  if(!token){
+    res.status(404).json({ message: 'Token not found' })
+  }
+
+  try {
+    const decoded = jwt.verify(token, JWT_SECRET_KEY)
+    req.user = decoded
+    res.status(200).json({ message: 'User Authenticated', user_id: decoded._id, user_full_name: decoded.full_name })
+  } catch (error) {
+    res.status(401).json({ message: 'Invalid or expired token' });
+  }
+
+  next()
+
+}
 
 const razorpay = new Razorpay({
-  key_id: "rzp_test_pT0cCmRBjU9jLL",
-  key_secret: "RSlwcMyxMmxMPkvYw2GMFLcA",
+  key_id: process.env.RAZOR_PAY_KEY_ID,
+  key_secret: process.env.RAZOR_PAY_KEY_SECRET,
 });
 
 //  Fetching All Products from Database
@@ -90,11 +124,12 @@ app.get("/api/all-products/:id", async (req, res) => {
 
 // Add to Cart
 
-app.post('/api/add-to-cart', async (req,res)=>{
+app.post('/api/add-to-cart' ,async (req,res)=>{
   try {
+    // console.log(req.user)
   const { id, title, price, brand, size, category, image_url } = req.body;
   console.log(id, title, price, brand, size, category, image_url)
-  await Cart.create({ id, title, price, brand, size, category, image_url })
+  await Cart.create( { id, title, price, brand, size, category, image_url })
   res.json({message: 'Added to cart'})
   } catch (error) {
     console.log(error)
@@ -110,6 +145,21 @@ app.get('/api/cart-items', async (req,res)=>{
   } catch (error) {
     console.log(error)
   }
+})
+
+// Delete Cart Items
+
+app.delete('/api/delete-cart-item/:id', async (req,res)=>{
+  console.log(req.params.id)
+  try {
+  const id = req.params.id
+  if(!id){ return res.status(404).json({ message: 'id not found' }) }
+  await Cart.deleteOne({ id })
+  res.status(200).json({ message: 'Cart item removed' })
+  } catch (error) {
+    console.log(error)
+  }
+
 })
 
 // Razorpay API EndPoints
@@ -176,6 +226,12 @@ app.post("/api/login", async (req, res) => {
     console.log(password)
 
     if (password) {
+      const token = jwt.sign({ _id: user._id, full_name: user.full_name }, JWT_SECRET_KEY, { expiresIn: '1h' } )
+      res.cookie('token', token, {
+        httpOnly: true,
+        maxAge: 3600000,
+        secure: false
+      })
       res.status(200).json({ message: "Login Successfull" });
     } else if(!password){
       res.status(400).json({ message: "Password didn't match" });
@@ -192,7 +248,7 @@ app.post('/api/sign-up', async (req,res)=>{
     const { email , password } = req.body;
   console.log( email , password )
   const HashedPassword = await bcrypt.hash(password, 10)
-  await User.create({ email , password: HashedPassword })
+  await User.create({ email , password: HashedPassword, Google_Login: false })
 
   res.status(200).json({message: 'Account create successfully'})
   } catch (error) {
@@ -215,6 +271,38 @@ app.post('/api/complete-profile', async (req,res)=>{
     console.log(error)
   }
 
+})
+
+// Google Auth
+
+app.post('/api/google-login', async (req,res)=>{
+  const { name, email } = req.body
+  console.log(name, email)
+  const user = await User.findOne({ full_name: name , email, Google_Login: true })
+  if(!user){
+    res.status(404).json({message: 'Sign Up with Google Account'})
+  }
+  const token = jwt.sign({ _id: user._id, full_name: user.full_name }, JWT_SECRET_KEY, { expiresIn: '1h' } )
+  res.cookie('token', token, {
+    httpOnly: true,
+    maxAge: 3600000,
+    secure: false
+  })
+  res.status(200).json({ message: 'Login Successfull' })
+})
+
+app.post('/api/google-signup', async (req,res)=>{
+  const { name, email } = req.body
+  console.log(name, email)
+  await User.create({ full_name: name , email, Google_Login: true })
+  res.status(200).json({ message: 'Google Account Signed In' })
+})
+
+// Logout
+app.post('/api/Logout', verifyToken  ,(req,res)=>{
+  console.log(req.user)
+  res.clearCookie('token');
+  res.status(200).json({ message: 'User Logged Out Successfully' })
 })
 
 app.listen(3000, () => {

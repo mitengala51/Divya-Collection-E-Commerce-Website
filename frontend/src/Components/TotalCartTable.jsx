@@ -8,12 +8,12 @@ export default function TotalCartTable({ totalItems, price }) {
 
   const {Razorpay} = useRazorpay();
 
-  const RAZORPAY_KEY_ID = 'rzp_test_pT0cCmRBjU9jLL';
+  const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZOR_PAY_KEY_ID;
 
   const handlePayment = async () => {
     try {
       // Make the API call to backend
-      const response = await fetch("http://localhost:3000/create-order", {
+      const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/create-order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export default function TotalCartTable({ totalItems, price }) {
         // after making the payment 
         handler: async (response) => {
           try {
-            await fetch("http://localhost:3000/verify-payment", {
+            await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/verify-payment`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -84,7 +84,7 @@ export default function TotalCartTable({ totalItems, price }) {
 
       <div className="d-flex justify-content-between">
         <p>Subtotal ({totalItems} items)</p>
-        <p>{price}</p>
+        <p>₹{price}</p>
       </div>
 
       <div className="d-flex justify-content-between">

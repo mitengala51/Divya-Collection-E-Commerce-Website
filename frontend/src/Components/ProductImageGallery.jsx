@@ -22,21 +22,12 @@ export default function ProductImageGallery({image_url}) {
         <CardCover sx={{minHeight: '500px'}}>
           <img
             src={img}
-            // srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800&dpr=2 2x"
             loading="lazy"
-            // style={{objectFit: 'cover'}}
             className='img-fluid rounded-2 border-0 shadow-lg '
-            alt=""
+            alt="product_images"
           />
         </CardCover>
         <CardContent>
-          {/* <Typography
-            level="body-lg"
-            textColor="#fff"
-            sx={{ fontWeight: 'lg', mt: { xs: 12, sm: 18 } }}
-          >
-            Image
-          </Typography> */}
         </CardContent>
       </Card>
         <div className='d-flex flex-row justify-content-center mt-3'>

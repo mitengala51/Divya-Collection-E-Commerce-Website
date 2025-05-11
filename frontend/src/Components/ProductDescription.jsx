@@ -22,6 +22,8 @@ export default function ProductDescription({ data }) {
         size: data.size,
         category: data.category,
         image_url: data.image_url,
+      },{
+        withCredentials: true
       }).then(()=>{
         notify()
       });

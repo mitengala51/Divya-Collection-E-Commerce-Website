@@ -26,7 +26,7 @@ export default function Product() {
 
     useEffect(()=>{
       async function fetchdata(){
-        data = await axios.get('http://localhost:3000/api/all-products')
+        data = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/all-products`)
        console.log(data.data.all_products[0].image_url)
        setResult(data.data.all_products)
       }

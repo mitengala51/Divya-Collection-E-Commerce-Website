@@ -22,7 +22,7 @@ export default function ProductDetailPage() {
       window.scroll(0, 0)
       async function fetchdata(){
         console.log('useEffect function called')
-        data = await axios.get('http://localhost:3000/api/all-products/' + id)
+        data = await axios.get(`${import.meta.env.VITE_REACT_APP_API_URL}/api/all-products/` + id)
        console.log(data.data.Specific_product[0])
        setResult(data.data.Specific_product[0])
       //  console.log(result)
