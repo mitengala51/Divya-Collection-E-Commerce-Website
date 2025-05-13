@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRazorpay } from "react-razorpay";
+import axios from "axios";
 
-export default function TotalCartTable({ totalItems, price }) {
+export default function TotalCartTable({ totalItems, price, quantity }) {
 
   const [totalPrice, setTotalPrice] = useState(0)
   console.log(price)
@@ -12,6 +13,7 @@ export default function TotalCartTable({ totalItems, price }) {
 
   const handlePayment = async () => {
     try {
+
       // Make the API call to backend
       const response = await fetch(`${import.meta.env.VITE_REACT_APP_API_URL}/create-order`, {
         method: "POST",
@@ -49,7 +51,7 @@ export default function TotalCartTable({ totalItems, price }) {
               }),
             });
             // Add onPaymentSuccessfull function here
-            alert("Payment successful!");
+            alert("Payment successful and Order Placed Successfully!");
           } catch (err) {
             // Add onPaymentUnSuccessfull function here
             alert("Payment failed: " + err.message);
@@ -73,6 +75,13 @@ export default function TotalCartTable({ totalItems, price }) {
       // this will open razorpay window for take the payment in the frontend
       // under the hood it use inbuild javascript windows api 
       rzpay.open(options);
+
+      const result = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/order`,{
+        total_amount: price,
+        quantity
+      },{
+        withCredentials: true
+      })
     } catch (err) {
       alert("Error creating order: " + err.message);
     }

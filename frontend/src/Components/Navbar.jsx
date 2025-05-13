@@ -27,7 +27,7 @@ export default function Navbar() {
           withCredentials: true
         })
         notify(response.data.message)
-        setLoggedIn(false)
+        setLoggedIn(prev=>!prev)
       } catch (error) {
         
       }

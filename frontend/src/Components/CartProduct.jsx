@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 
-export default function CartProduct({ id ,title, price, brand, image_url, setCartDeleted, totalPrice,setTotalPrice }) {
+export default function CartProduct({ id ,title, price, brand, image_url, cartDeleted , setCartDeleted, totalPrice,setTotalPrice, OrderQuantity, setOrderQuantity }) {
 
   const [quantity, setQuantity] = useState(1);
   const [Cartprice, setCartPrice] = useState(price);
@@ -21,16 +21,11 @@ export default function CartProduct({ id ,title, price, brand, image_url, setCar
       console.log(response)
 
       if(response.status == 200){
-        setCartDeleted(true)
+        setCartDeleted(!cartDeleted)
       }
     } catch (error) {
       console.log(error)
-      // if(error.status == 404){
-        
-      // }
     }
-    
-
   }
 
   return (
@@ -61,6 +56,7 @@ export default function CartProduct({ id ,title, price, brand, image_url, setCar
                 setQuantity(1);
               } else {
                 setQuantity(quantity => quantity - 1);
+                setOrderQuantity(oq => oq - 1)
                 console.log(quantity)
                 setCartPrice(Cartprice => Cartprice - price);
                 setTotalPrice(totalPrice - price)
@@ -77,6 +73,7 @@ export default function CartProduct({ id ,title, price, brand, image_url, setCar
             onClick={() => {
               console.log("Props Price: " + price)
               setQuantity(q => q + 1);
+              setOrderQuantity(oq => oq + 1)
               // console.log(quantity)
               unitQuantity = unitQuantity + 1
               console.log("UnitQuantity Variable: " + unitQuantity)
