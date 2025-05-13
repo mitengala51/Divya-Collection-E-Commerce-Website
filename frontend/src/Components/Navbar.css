@@ -14,3 +14,17 @@ h4 {
 .Link{
   text-decoration: none;
 }
+
+.menuDiv{
+  display: none;
+}
+
+@media (max-width: 700px) {
+  .menuDiv{
+    display: inline-block;
+  }
+
+  .hide{
+    display: none;
+  }
+}

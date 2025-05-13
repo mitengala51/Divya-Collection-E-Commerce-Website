@@ -254,7 +254,8 @@ export default function LoginModal({ open, handleClose, setLoggedIn }) {
                     if(response.status == 200){
                       success(response.data.message)
                       handleClose()
-                      setLoggedIn(true)
+                      const logon = true
+                      setLoggedIn(prev=>prev=true)
                     }
                   } catch (error) {
                     console.log(error)

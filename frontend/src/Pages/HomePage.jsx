@@ -11,6 +11,8 @@ import AuthModal from './Demo'
 
 export default function HomePage() {
 
+  const [loggedIn, setLoggedIn] = useState(false)
+
   return (
     <div>
         <Navbar />

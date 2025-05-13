@@ -6,11 +6,16 @@ import ShoppingCartPage from "./Pages/ShoppingCartPage";
 import CompleteProfilePage from "./Pages/CompleteProfilePage";
 import AboutUsPage from "./Pages/AboutUsPage";
 import ContactUsPage from "./Pages/ContactUsPage";
+import { useState } from "react";
+import { LoggedIn } from "./Components/context/loggedIn";
 
 function App() {
 
+  const [loggedIn, setLoggedIn] = useState(false)
+
   return (
     <>
+    <LoggedIn.Provider value={{loggedIn, setLoggedIn}}>
       <Routes>
         <Route
           path="/"
@@ -26,6 +31,7 @@ function App() {
         <Route path="/Contact-Us" element={<ContactUsPage />} />
         <Route path="/demo" element={<Demo />} />
       </Routes>
+      </LoggedIn.Provider>
     </>
   );
 }

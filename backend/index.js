@@ -452,6 +452,64 @@ Thanks again for choosing Divya Collection` ,
   }
 });
 
+// Contact Endpoint
+app.post('/api/contact-us', (req,res)=>{
+  const { name, email, phone_number, subject, message } = req.body
+
+  if(!phone_number){
+
+    const mailForOwner = {
+      from: "mitengala51@gmail.com",
+      to: 'mitengala51@gmail.com',
+      subject: `✉️ New Message from Your Website – ${subject}`,
+      text: `Hello,
+  You've received a new message from the contact form on your website. Here are the details:
+  🧑 Name: ${name}
+  📧 Email: ${email}
+  📌 Subject: ${subject}
+  💬 Message: ${message}
+  
+  Please follow up with the sender as soon as possible.`,
+    };
+
+    transporter.sendMail(mailForOwner, (error, info) => {
+      if (error) {
+        console.error("Error sending email: ", error);
+      } else {
+        console.log("Email sent: ", info.response);
+      }
+    });
+
+    return res.status(200).json({message: 'Your Form has been submited'})
+
+  }
+  const mailForOwner = {
+    from: "mitengala51@gmail.com",
+    to: 'mitengala51@gmail.com',
+    subject: `✉️ New Message from Your Website – ${subject}`,
+    text: `Hello,
+You've received a new message from the contact form on your website. Here are the details:
+🧑 Name: ${name}
+📧 Email: ${email}
+📞 Phone: ${phone_number}
+📌 Subject: ${subject}
+💬 Message: ${message}
+
+Please follow up with the sender as soon as possible.`,
+  };
+
+  transporter.sendMail(mailForOwner, (error, info) => {
+    if (error) {
+      console.error("Error sending email: ", error);
+    } else {
+      console.log("Email sent: ", info.response);
+    }
+  });
+
+  res.status(200).json({message: 'Your Form has been submitted'})
+
+})
+
 app.listen(3000, () => {
   console.log("Server is Listinening to port 3000");
 });

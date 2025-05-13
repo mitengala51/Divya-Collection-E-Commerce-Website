@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import facebook  from '../assets/facebook_icon.svg'
 import  instagram from '../assets/instagram_icon.svg'
+import toast, { Toaster } from "react-hot-toast";
+import axios from 'axios'
 
 export default function ContactUs() {
 
@@ -12,6 +14,8 @@ export default function ContactUs() {
       subject: '',
       message: ''
     })
+
+    const success = (message) => toast.success(message);
 
     function handleNameChange(e){
       console.log(e.target.value)
@@ -53,13 +57,25 @@ export default function ContactUs() {
       })
     }
 
-    function handleSubmitContactForm(e){
+    async function handleSubmitContactForm(e){
       e.preventDefault()
       
+      const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/contact-us`,{
+        name: ContactForm.name,
+        email: ContactForm.email,
+        phone_number: ContactForm.phone_number,
+        subject: ContactForm.subject,
+        message:  ContactForm.message
+      })
+
+      if(response.status == 200){
+        success(response.data.message)
+      }
     }
 
   return (
     <div className="px-lg-5 py-4 mx-5">
+      <Toaster />
       <div>
         <h1 className="text-center my-3">Contact Us</h1>
       </div>
@@ -73,7 +89,7 @@ export default function ContactUs() {
       <div className="row">
         <div className="col-lg-6">
           {/* <div className="col-md-7 col-lg-8"> */}
-          <form className="needs-validation">
+          <form className="needs-validation" onSubmit={handleSubmitContactForm}>
             {" "}
             <div className="row g-3">
               {" "}
@@ -160,7 +176,7 @@ export default function ContactUs() {
                 ></textarea>
               </div>
             </div>{" "}
-            <button className="w-100 btn btn-primary btn-lg" type="submit" onSubmit={handleSubmitContactForm}>
+            <button className="w-100 btn btn-primary btn-lg" type="submit">
               Send Message
             </button>{" "}
           </form>{" "}
