@@ -9,7 +9,7 @@ import './Brands.css'
 
 export default function Brands() {
   return (
-    <Marquee pauseOnHover={false} className='mb-4 mt-1 brands-div' style={{backgroundColor: 'white'}}>
+    <Marquee pauseOnHover={false} className='mb-4 mt-1 brands-div' style={{backgroundColor: '#f9fafb'}}>
 
       <div className='container p-3'><img src={l1} alt="any" width={300} height={100}/></div>
       <div className='container p-3'><img src={l2} alt="any" width={300} height={100}/></div>

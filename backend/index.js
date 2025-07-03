@@ -401,19 +401,21 @@ app.post("/api/order", verifyToken, async (req, res) => {
 
     // const order = await Order.find({ "userDetails._id": req.user._id })
     const order = await Order.find({
-      "userDetails._id": new mongoose.Types.ObjectId(req.user._id),
+      "userDetails._id": new mongoose.Types.ObjectId(req.user._id)
     });
-    console.log(order);
+    console.log(order)
+    console.log(order.length-1);
+    console.log(order[order.length-1])
 
     const mailForOwner = {
       from: "mitengala51@gmail.com",
       to: 'mitengala51@gmail.com',
-      subject: `🛒 New Order Received – Order ${order._id}`,
+      subject: `🛒 New Order Received – Order ${order[order.length-1]._id}`,
       text: `Hi Divya Collection,
 Great news! A new order has just been placed on your store. 
 Order Details: 
-Customer Name: ${order[0].userDetails[0].full_name} 
-Total Amount: ${order[0].total_amount} 
+Customer Name: ${order[order.length-1].userDetails[0].full_name} 
+Total Amount: ${order[order.length-1].total_amount} 
 Please review the order details and begin processing it at your earliest convenience.
 Let us know if you need any assistance.`,
     };
@@ -422,7 +424,7 @@ Let us know if you need any assistance.`,
       from: "mitengala51@gmail.com",
       to: user.email,
       subject: `🎉 Thank You for Your Order`,
-      text: `Hi ${order[0].userDetails[0].full_name}, 
+      text: `Hi ${order[order.length-1].userDetails[0].full_name}, 
 Thank you for your order! We’ve received it and our team is now processing it.
 
 You’ll get another update as soon as your order ships. If you have any questions in the meantime, feel free to use Contact Page in the website

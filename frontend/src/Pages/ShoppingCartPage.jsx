@@ -34,9 +34,9 @@ export default function ShoppingCartPage() {
   }, [cartDeleted]);
 
   return (
-    <div>
+    <div className="w-100">
       <Navbar />
-      <div className="p-5">
+      <div className="p-3 p-sm-5">
         <div className="">
           <h1 className="h2 text-center">Your Shopping Cart</h1>
           <p className="text-center">

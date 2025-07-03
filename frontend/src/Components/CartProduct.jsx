@@ -4,7 +4,6 @@ import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
 import axios from "axios";
 
 export default function CartProduct({ id ,title, price, brand, image_url, cartDeleted , setCartDeleted, totalPrice,setTotalPrice, OrderQuantity, setOrderQuantity }) {
@@ -29,7 +28,7 @@ export default function CartProduct({ id ,title, price, brand, image_url, cartDe
   }
 
   return (
-    <div className="p-3 d-flex flex-row gap-3 justify-content-between bg-body-tertiary w-100 rounded-3 shadow mb-3">
+    <div className="p-3 d-flex flex-column flex-md-row gap-3 justify-content-between bg-body-tertiary rounded-3 shadow mb-3">
       <div className="d-flex flex-row gap-3">
         <div>
         <img
@@ -37,6 +36,7 @@ export default function CartProduct({ id ,title, price, brand, image_url, cartDe
           width={100}
           height={100}
           className="object-fit-cover rounded"
+          style={{maxWidth: '100px', height: '100px'}}
         />
       </div>
 
@@ -46,7 +46,7 @@ export default function CartProduct({ id ,title, price, brand, image_url, cartDe
           Brand: {brand}
         </p>
         <p>
-          <strong className="fs-5">Rs {price}</strong>
+          <strong className="fs-sm-5 fs-6">Rs {price}</strong>
         </p>
         <div className="d-flex gap-3">
           <Button
@@ -97,7 +97,7 @@ export default function CartProduct({ id ,title, price, brand, image_url, cartDe
         <Button
           variant="contained"
           color="error"
-          className="align-self-end"
+          className="align-self-sm-end"
           startIcon={<DeleteIcon />}
           onClick={deleteItem}
         >

@@ -76,6 +76,22 @@ export default function LoginModal({ open, handleClose, setLoggedIn }) {
         return notify("Please enter your password");
       }
 
+      if(LoginForm.password.length < 8){
+        return notify("Password must have atleast 8 characters");
+      }
+
+      if(!/[A-Z]/.test(LoginForm.password)){
+        return notify("Password must have atleast 1 Uppercase characters");
+      }
+
+      if(!/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(LoginForm.password)){
+        return notify("Password must have atleast 1 special characters");
+      }
+
+      if(!/[0-9]/.test(LoginForm.password)){
+        return notify("Password must have atleast 1 number");
+      }
+
       const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/login`, {
         email: LoginForm.email,
         Inputpassword: LoginForm.password,
@@ -137,6 +153,22 @@ export default function LoginModal({ open, handleClose, setLoggedIn }) {
 
       if (SignUpForm.password == "") {
         return notify("Please enter your password");
+      }
+
+      if(SignUpForm.password.length < 8){
+        return notify("Password must have atleast 8 characters");
+      }
+
+      if(!/[A-Z]/.test(SignUpForm.password)){
+        return notify("Password must have atleast 1 Uppercase characters");
+      }
+
+      if(!/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(SignUpForm.password)){
+        return notify("Password must have atleast 1 special characters");
+      }
+
+      if(!/[0-9]/.test(SignUpForm.password)){
+        return notify("Password must have atleast 1 number");
       }
 
       if (SignUpForm.password == SignUpForm.confirm_password) {

@@ -15,7 +15,7 @@ export default function CategoryImages() {
       className='px-3'
       sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', p: 0, m: 0 }}
     >
-      <Card component="li" sx={{ minWidth: 300, flexGrow: 1, minHeight: '400px' }}>
+      <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
         <CardCover>
           <img
             src={ci_7}

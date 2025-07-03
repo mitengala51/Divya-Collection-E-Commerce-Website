@@ -149,6 +149,8 @@ export default function CompleteProfile() {
             id="inputEmail2"
             name="phone_number"
             required
+            minLength={10}
+            maxLength={10}
             onChange={handlePhoneNumberChange}
           />
         </div>

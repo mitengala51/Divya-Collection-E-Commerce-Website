@@ -41,12 +41,17 @@ export default function Product() {
           slidesToSlide: 1 // optional, default to 1.
         },
         tablet: {
-          breakpoint: { max: 1024, min: 464 },
-          items: 2,
+          breakpoint: { max: 1326, min: 1006 },
+          items: 3,
           slidesToSlide: 1 // optional, default to 1.
         },
         mobile: {
-          breakpoint: { max: 464, min: 0 },
+          breakpoint: { max: 1006, min: 696 },
+          items: 2,
+          slidesToSlide: 1 // optional, default to 1.
+        },
+        sm: {
+          breakpoint: { max: 500, min: 0 },
           items: 1,
           slidesToSlide: 1 // optional, default to 1.
         }
@@ -56,7 +61,7 @@ export default function Product() {
    <Carousel responsive={responsive} infinite={true} className='px-1 py-2 m-2' style={{height: '350px'}}>
     {result.map((data)=>{
         return(
-            <Card key={data.id}  sx={{ width: 320, maxWidth: '100%', boxShadow: 'lg' }} className='product-card'>
+            <Card key={data.id}  sx={{ width: 300, maxWidth: '100%', boxShadow: 'lg'}} className='product-card'>
             <CardOverflow >
               <AspectRatio ratio="1" sx={{ minWidth: 300}}>
                 <img
