@@ -31,10 +31,10 @@ export default function ProductImageGallery({image_url}) {
         </CardContent>
       </Card>
         <div className='d-flex flex-row justify-content-center mt-3'>
-        <img src={p_1} id='p_1' className="rounded mx-2 border border-dark-subtle border-2 d-block" alt="..." width={80} height={80} onMouseEnter={()=>{ HandleMouseEnter(p_1) }}/>
-        <img src={p_2} id='p_2' className="rounded mx-2 border border-dark-subtle border-2 d-block" alt="..." width={80} height={80} onMouseEnter={()=>{ HandleMouseEnter(p_2) }}/>
-        <img src={p_3} id='p_3' className="rounded mx-2 border border-dark-subtle border-2 d-block" alt="..." width={80} height={80} onMouseEnter={()=>{ HandleMouseEnter(p_3) }}/>
-        <img src={p_4} id='p_4' className="rounded mx-2 border border-dark-subtle border-2 d-block" alt="..." width={80} height={80} onMouseEnter={()=>{ HandleMouseEnter(p_4) }}/>
+        <img src={p_1} id='p_1' className="rounded mx-sm-2 ml-1 border border-dark-subtle border-2 d-block" alt="..." width={80} height={80} onMouseEnter={()=>{ HandleMouseEnter(p_1) }}/>
+        <img src={p_2} id='p_2' className="rounded mx-sm-2 mx-1 border border-dark-subtle border-2 d-block" alt="..." width={80} height={80} onMouseEnter={()=>{ HandleMouseEnter(p_2) }}/>
+        <img src={p_3} id='p_3' className="rounded mx-sm-2 mx-1 border border-dark-subtle border-2 d-block" alt="..." width={80} height={80} onMouseEnter={()=>{ HandleMouseEnter(p_3) }}/>
+        <img src={p_4} id='p_4' className="rounded mx-sm-2 mr-1 border border-dark-subtle border-2 d-block" alt="..." width={80} height={80} onMouseEnter={()=>{ HandleMouseEnter(p_4) }}/>
         </div>
     </div>
   )

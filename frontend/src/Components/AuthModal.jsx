@@ -76,21 +76,21 @@ export default function LoginModal({ open, handleClose, setLoggedIn }) {
         return notify("Please enter your password");
       }
 
-      if(LoginForm.password.length < 8){
-        return notify("Password must have atleast 8 characters");
-      }
+      // if(LoginForm.password.length < 8){
+      //   return notify("Password must have atleast 8 characters");
+      // }
 
-      if(!/[A-Z]/.test(LoginForm.password)){
-        return notify("Password must have atleast 1 Uppercase characters");
-      }
+      // if(!/[A-Z]/.test(LoginForm.password)){
+      //   return notify("Password must have atleast 1 Uppercase characters");
+      // }
 
-      if(!/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(LoginForm.password)){
-        return notify("Password must have atleast 1 special characters");
-      }
+      // if(!/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/.test(LoginForm.password)){
+      //   return notify("Password must have atleast 1 special characters");
+      // }
 
-      if(!/[0-9]/.test(LoginForm.password)){
-        return notify("Password must have atleast 1 number");
-      }
+      // if(!/[0-9]/.test(LoginForm.password)){
+      //   return notify("Password must have atleast 1 number");
+      // }
 
       const response = await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/login`, {
         email: LoginForm.email,

@@ -27,7 +27,9 @@ export default function ProductDescription({ data }) {
       }).then(()=>{
         notify()
       });
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const style = {

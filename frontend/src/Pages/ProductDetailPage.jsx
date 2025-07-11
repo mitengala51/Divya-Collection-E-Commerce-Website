@@ -40,7 +40,7 @@ export default function ProductDetailPage() {
         <div className="col-xl-6">
           <ProductImageGallery image_url={result.image_url}/>
         </div>
-        <div className="col-xl-6 my-lg-2">
+        <div className="col-xl-6 my-lg-2 my-md-2 my-sm-2 my-2">
           <ProductDescription data={result}/>
           <ProductReview title="RELATED PRODUCT"/>
         </div>

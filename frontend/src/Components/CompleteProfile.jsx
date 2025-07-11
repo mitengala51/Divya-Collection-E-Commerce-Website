@@ -113,9 +113,9 @@ export default function CompleteProfile() {
   }
 
   return (
-    <div className="px-5 py-4 rounded-2 shadow w-50">
+    <div className="px-5 py-4 rounded-2 shadow">
       <Toaster />
-      <h1 className="text-center mb-4">Complete your Profile</h1>
+      <h1 className="text-center mb-lg-4">Complete your Profile</h1>
       <form className="row g-3" onSubmit={handleSubmit}>
         <div className="col-md-6">
           <label className="form-label">First Name</label>

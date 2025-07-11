@@ -1,4 +1,4 @@
-import React , { useContext } from "react";
+import React, { useContext } from "react";
 import "./Navbar.css";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
@@ -17,8 +17,8 @@ export default function Navbar() {
   const [open, setOpen] = React.useState(false);
   // const [loggedIn, setLoggedIn] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
-  
-  const { loggedIn, setLoggedIn } = useContext(LoggedIn)
+
+  const { loggedIn, setLoggedIn } = useContext(LoggedIn);
 
   const Menuopen = Boolean(anchorEl);
 
@@ -51,7 +51,7 @@ export default function Navbar() {
         }
       );
       notify(response.data.message);
-      const logon = false
+      const logon = false;
       setLoggedIn(logon);
     } catch (error) {}
   }
@@ -69,7 +69,9 @@ export default function Navbar() {
         <Link to="http://localhost:5173/" className="Link hide">
           <div className=" nav-links">Home</div>
         </Link>
-        {/* <Link to='Shopping' className="Link"><div className=" nav-links">Shopping</div></Link> */}
+        <Link to="Shopping" className="Link">
+          <div className=" nav-links">Shopping</div>
+        </Link>
         <Link to="http://localhost:5173/About-Us" className="Link hide">
           <div className=" nav-links">About</div>
         </Link>
@@ -153,23 +155,23 @@ export default function Navbar() {
             </MenuItem>
 
             <MenuItem onClick={MenuClose}>
-                {loggedIn ? (
-                  <div
-                    className="ps-1 "
-                    onClick={handleClick}
-                    style={{ fontSize: "x-larger", cursor: "pointer" }}
-                  >
-                    Logout
-                  </div>
-                ) : (
-                  <div
-                    className="ps-1 "
-                    onClick={handleOpen}
-                    style={{ fontSize: "x-larger", cursor: "pointer" }}
-                  >
-                    Login
-                  </div>
-                )}
+              {loggedIn ? (
+                <div
+                  className="ps-1 "
+                  onClick={handleClick}
+                  style={{ fontSize: "x-larger", cursor: "pointer" }}
+                >
+                  Logout
+                </div>
+              ) : (
+                <div
+                  className="ps-1 "
+                  onClick={handleOpen}
+                  style={{ fontSize: "x-larger", cursor: "pointer" }}
+                >
+                  Login
+                </div>
+              )}
             </MenuItem>
           </Menu>
         </div>
