@@ -29,6 +29,7 @@ function App() {
         <Route path="/complete-profile" element={<CompleteProfilePage />} />
         <Route path="/About-Us" element={<AboutUsPage />} />
         <Route path="/Contact-Us" element={<ContactUsPage />} />
+        <Route path="/shopping" element={<ShoppingPage />} />
         <Route path="/demo" element={<Demo />} />
       </Routes>
       </LoggedIn.Provider>
