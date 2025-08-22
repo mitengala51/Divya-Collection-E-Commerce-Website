@@ -8,12 +8,11 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import nodemailer from "nodemailer";
 
-
 dotenv.config();
 
 mongoose
   .connect(
-    "mongodb+srv://mitengala51:pass123@cluster0.9ew96yf.mongodb.net/Divya-Collection-E-commerce?retryWrites=true&w=majority&appName=Cluster0"
+    process.env.MONGOOSE_URL
   )
   .then(() => {
     console.log("Connected to MongoDb");
@@ -28,7 +27,7 @@ const ProductSchema = new mongoose.Schema({
   category: String,
   brand: String,
   size: Number,
-  image_url: String,
+  image_url: Array,
 });
 
 const CartSchema = new mongoose.Schema({
@@ -401,21 +400,21 @@ app.post("/api/order", verifyToken, async (req, res) => {
 
     // const order = await Order.find({ "userDetails._id": req.user._id })
     const order = await Order.find({
-      "userDetails._id": new mongoose.Types.ObjectId(req.user._id)
+      "userDetails._id": new mongoose.Types.ObjectId(req.user._id),
     });
-    console.log(order)
-    console.log(order.length-1);
-    console.log(order[order.length-1])
+    console.log(order);
+    console.log(order.length - 1);
+    console.log(order[order.length - 1]);
 
     const mailForOwner = {
       from: "mitengala51@gmail.com",
-      to: 'mitengala51@gmail.com',
-      subject: `🛒 New Order Received – Order ${order[order.length-1]._id}`,
+      to: "mitengala51@gmail.com",
+      subject: `🛒 New Order Received – Order ${order[order.length - 1]._id}`,
       text: `Hi Divya Collection,
 Great news! A new order has just been placed on your store. 
 Order Details: 
-Customer Name: ${order[order.length-1].userDetails[0].full_name} 
-Total Amount: ${order[order.length-1].total_amount} 
+Customer Name: ${order[order.length - 1].userDetails[0].full_name} 
+Total Amount: ${order[order.length - 1].total_amount} 
 Please review the order details and begin processing it at your earliest convenience.
 Let us know if you need any assistance.`,
     };
@@ -424,12 +423,12 @@ Let us know if you need any assistance.`,
       from: "mitengala51@gmail.com",
       to: user.email,
       subject: `🎉 Thank You for Your Order`,
-      text: `Hi ${order[order.length-1].userDetails[0].full_name}, 
+      text: `Hi ${order[order.length - 1].userDetails[0].full_name}, 
 Thank you for your order! We’ve received it and our team is now processing it.
 
 You’ll get another update as soon as your order ships. If you have any questions in the meantime, feel free to use Contact Page in the website
       
-Thanks again for choosing Divya Collection` ,
+Thanks again for choosing Divya Collection`,
     };
 
     transporter.sendMail(mailForOwner, (error, info) => {
@@ -455,14 +454,13 @@ Thanks again for choosing Divya Collection` ,
 });
 
 // Contact Endpoint
-app.post('/api/contact-us', (req,res)=>{
-  const { name, email, phone_number, subject, message } = req.body
+app.post("/api/contact-us", (req, res) => {
+  const { name, email, phone_number, subject, message } = req.body;
 
-  if(!phone_number){
-
+  if (!phone_number) {
     const mailForOwner = {
       from: "mitengala51@gmail.com",
-      to: 'mitengala51@gmail.com',
+      to: "mitengala51@gmail.com",
       subject: `✉️ New Message from Your Website – ${subject}`,
       text: `Hello,
   You've received a new message from the contact form on your website. Here are the details:
@@ -482,12 +480,11 @@ app.post('/api/contact-us', (req,res)=>{
       }
     });
 
-    return res.status(200).json({message: 'Your Form has been submited'})
-
+    return res.status(200).json({ message: "Your Form has been submited" });
   }
   const mailForOwner = {
     from: "mitengala51@gmail.com",
-    to: 'mitengala51@gmail.com',
+    to: "mitengala51@gmail.com",
     subject: `✉️ New Message from Your Website – ${subject}`,
     text: `Hello,
 You've received a new message from the contact form on your website. Here are the details:
@@ -508,9 +505,21 @@ Please follow up with the sender as soon as possible.`,
     }
   });
 
-  res.status(200).json({message: 'Your Form has been submitted'})
+  res.status(200).json({ message: "Your Form has been submitted" });
+});
 
-})
+// Search Endpoing
+app.get("/api/search", async (req, res) => {
+  try {
+    const product = req.query.product;
+    const product_found = await Product.find({
+      title: { $regex: product, $options: "i" },
+    });
+    res.json(product_found);
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 app.listen(3000, () => {
   console.log("Server is Listinening to port 3000");

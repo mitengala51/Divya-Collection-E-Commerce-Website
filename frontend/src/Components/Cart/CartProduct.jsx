@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import p_1 from "../assets/Products Images/p_1.jpg";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
@@ -15,9 +14,9 @@ export default function CartProduct({ id ,title, price, brand, image_url, cartDe
 
   async function deleteItem(){
     try {
-      console.log(id)
+      // console.log(id)
       const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/api/delete-cart-item/` + id)
-      console.log(response)
+      // console.log(response)
 
       if(response.status == 200){
         setCartDeleted(!cartDeleted)
@@ -57,7 +56,7 @@ export default function CartProduct({ id ,title, price, brand, image_url, cartDe
               } else {
                 setQuantity(quantity => quantity - 1);
                 setOrderQuantity(oq => oq - 1)
-                console.log(quantity)
+                // console.log(quantity)
                 setCartPrice(Cartprice => Cartprice - price);
                 setTotalPrice(totalPrice - price)
               }
@@ -71,12 +70,12 @@ export default function CartProduct({ id ,title, price, brand, image_url, cartDe
           <Button
             variant="text"
             onClick={() => {
-              console.log("Props Price: " + price)
+              // console.log("Props Price: " + price)
               setQuantity(q => q + 1);
               setOrderQuantity(oq => oq + 1)
               // console.log(quantity)
               unitQuantity = unitQuantity + 1
-              console.log("UnitQuantity Variable: " + unitQuantity)
+              // console.log("UnitQuantity Variable: " + unitQuantity)
               setCartPrice(price * unitQuantity);
               setTotalPrice(totalPrice + price)
             }}

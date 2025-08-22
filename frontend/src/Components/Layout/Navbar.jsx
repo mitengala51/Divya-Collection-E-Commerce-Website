@@ -3,19 +3,18 @@ import "./Navbar.css";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Link } from "react-router";
-import LoginModal from "./AuthModal";
+import LoginModal from "../Auth/AuthModal";
 import axios from "axios";
 import LogoutIcon from "@mui/icons-material/Logout";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MenuIcon from "@mui/icons-material/Menu";
-import { LoggedIn } from "./context/loggedIn";
+import { LoggedIn } from "../context/loggedIn";
 
 export default function Navbar() {
   const [open, setOpen] = React.useState(false);
-  // const [loggedIn, setLoggedIn] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const { loggedIn, setLoggedIn } = useContext(LoggedIn);
@@ -66,20 +65,20 @@ export default function Navbar() {
         Divya Collection
       </Link>
       <div className="row row-cols-auto">
-        <Link to="http://localhost:5173/" className="Link hide">
+        <Link to="/" className="Link hide">
           <div className=" nav-links">Home</div>
         </Link>
-        <Link to="Shopping" className="Link">
+        <Link to="/Shopping" className="Link hide">
           <div className=" nav-links">Shopping</div>
         </Link>
-        <Link to="http://localhost:5173/About-Us" className="Link hide">
+        <Link to="/About-Us" className="Link hide">
           <div className=" nav-links">About</div>
         </Link>
-        <Link to="http://localhost:5173/Contact-Us" className="Link hide">
+        <Link to="/Contact-Us" className="Link hide">
           <div className="me-5 nav-links">Contact Us</div>
         </Link>
         <div className="ps-1">
-          <Link to="http://localhost:5173/shopping-cart" className="hide">
+          <Link to="/shopping-cart" className="hide">
             <ShoppingCartIcon
               sx={{ color: "black", fontSize: "x-larger", cursor: "pointer" }}
             />
@@ -126,60 +125,51 @@ export default function Navbar() {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={MenuClose}>
-              {" "}
-              <Link to="http://localhost:5173/" className="Link ">
+            {" "}
+            <Link to="/" className="Link ">
+              <MenuItem onClick={MenuClose}>
                 <div className=" nav-links">Home</div>
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={MenuClose}>
-              {" "}
-              <Link to="http://localhost:5173/About-Us" className="Link ">
+              </MenuItem>
+            </Link>{" "}
+            <Link to="/about-Us" className="Link ">
+              <MenuItem onClick={MenuClose}>
                 <div className=" nav-links">About</div>
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={MenuClose}>
-              {" "}
-              <Link to="http://localhost:5173/Contact-Us" className="Link ">
+              </MenuItem>
+            </Link>{" "}
+            <Link to="/contact-Us" className="Link ">
+              <MenuItem onClick={MenuClose}>
                 <div className="me-5 nav-links">Contact Us</div>
-              </Link>
-            </MenuItem>
-
-            <MenuItem onClick={MenuClose}>
-              <Link
-                to="http://localhost:5173/shopping-cart"
-                className="Link nav-links"
-              >
-                Shopping Cart
-              </Link>
-            </MenuItem>
-
-            <MenuItem onClick={MenuClose}>
-              {loggedIn ? (
+              </MenuItem>
+            </Link>
+            <Link to="/shopping-cart" className="Link nav-links">
+              <MenuItem onClick={MenuClose}>Cart</MenuItem>
+            </Link>
+            <Link to="/shopping" className="Link nav-links">
+              <MenuItem onClick={MenuClose}>Shopping</MenuItem>
+            </Link>
+            {loggedIn ? (
+              <MenuItem onClick={()=>{MenuClose(),handleClick()}}>
                 <div
                   className="ps-1 "
-                  onClick={handleClick}
+                  // onClick={handleClick}
                   style={{ fontSize: "x-larger", cursor: "pointer" }}
                 >
                   Logout
                 </div>
-              ) : (
+              </MenuItem>
+            ) : (
+              <MenuItem onClick={()=>{MenuClose(),handleOpen()}}>
                 <div
                   className="ps-1 "
-                  onClick={handleOpen}
                   style={{ fontSize: "x-larger", cursor: "pointer" }}
                 >
                   Login
                 </div>
-              )}
-            </MenuItem>
+              </MenuItem>
+            )}
           </Menu>
         </div>
       </div>
     </div>
   );
-}
-
-{
-  /* <Button variant="text" onClick={handleClick} >Logout</Button> */
 }

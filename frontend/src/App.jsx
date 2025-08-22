@@ -8,6 +8,8 @@ import AboutUsPage from "./Pages/AboutUsPage";
 import ContactUsPage from "./Pages/ContactUsPage";
 import { useState } from "react";
 import { LoggedIn } from "./Components/context/loggedIn";
+import ShoppingPage from "./Pages/ShoppingPage";
+import './App.css'
 
 function App() {
 
@@ -27,8 +29,8 @@ function App() {
         />
         <Route path="/shopping-cart" element={<ShoppingCartPage />} />
         <Route path="/complete-profile" element={<CompleteProfilePage />} />
-        <Route path="/About-Us" element={<AboutUsPage />} />
-        <Route path="/Contact-Us" element={<ContactUsPage />} />
+        <Route path="/about-Us" element={<AboutUsPage />} />
+        <Route path="/contact-Us" element={<ContactUsPage />} />
         <Route path="/shopping" element={<ShoppingPage />} />
         <Route path="/demo" element={<Demo />} />
       </Routes>

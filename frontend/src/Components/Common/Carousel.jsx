@@ -1,8 +1,6 @@
-import React from "react";
-import ci_1 from "../assets/ci_1_resize.jpg";
-import ci_2 from "../assets/ci_2.jpg";
-import ci_3 from "../assets/ci_3.jpg";
-import ci_4 from '../assets/ci_6.jpg'
+import ci_2 from "../../assets/ci_2.jpg";
+import ci_3 from "../../assets/ci_3.jpg";
+import ci_4 from '../../assets/ci_6.jpg'
 
 export default function Carousel() {
   return (

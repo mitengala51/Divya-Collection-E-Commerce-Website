@@ -1,7 +1,5 @@
-import React, { useContext, useEffect } from "react";
 import Button from "@mui/joy/Button";
 import axios from "axios";
-import { Link } from "react-router";
 import toast, { Toaster } from 'react-hot-toast';
 
 export default function ProductDescription({ data }) {
@@ -10,18 +8,20 @@ export default function ProductDescription({ data }) {
 
   async function handleClick() {
     try {
-      if (data.length > 0) {
+      console.log(data)
+
+      if (data.length === 0) {
         return console.log("Data not found");
       }
 
       await axios.post("http://localhost:3000/api/add-to-cart", {
-        id: data.id,
-        title: data.title,
-        price: data.price,
-        brand: data.brand,
-        size: data.size,
-        category: data.category,
-        image_url: data.image_url,
+        id: data[0].id,
+        title: data[0].title,
+        price: data[0].price,
+        brand: data[0].brand,
+        size: data[0].size,
+        category: data[0].category,
+        image_url: data[0].image_url[0],
       },{
         withCredentials: true
       }).then(()=>{
@@ -39,25 +39,25 @@ export default function ProductDescription({ data }) {
   return (
     <div className="col">
          <Toaster />
-      <p className="col h1">{data.title}</p>
-      <p className="col h2">Rs {data.price}</p>
+      <p className="col h1">{data[0]?.title}</p>
+      <p className="col h2">Rs {data[0]?.price}</p>
       <p className="col pt-2" style={style}>
-        {data.short_description}
+        {data[0]?.short_description}
       </p>
       <div className="col">
         <p className="col h5 my-4">
-          Category: <span className="fw-normal">{data.category}</span>
+          Category: <span className="fw-normal">{data[0]?.category}</span>
         </p>
         <p className="col h5 my-4">
-          Brand: <span className="fw-normal">{data.brand}</span>
+          Brand: <span className="fw-normal">{data[0]?.brand}</span>
         </p>
         <p className="col h5 my-4">
-          Size: <span className="fw-normal">{data.size}</span>
+          Size: <span className="fw-normal">{data[0]?.size}</span>
         </p>
       </div>
       <p className="col h4">Detailed Description</p>
       <p className="col" style={style}>
-        {data.detail_description}
+        {data[0]?.detail_description}
       </p>
       <div className="col">
         {" "}

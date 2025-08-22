@@ -2,7 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";
 import Modal from "@mui/material/Modal";
-import "./Login-Modal.css";
+import "./AuthModal.css";
 import { Link } from "@mui/material";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
@@ -10,18 +10,18 @@ import { useNavigate } from "react-router";
 import { GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "none",
-  outline: "none",
-  boxShadow: 24,
-  p: 4,
-};
+// const style = {
+//   position: "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   width: 400,
+//   bgcolor: "background.paper",
+//   border: "none",
+//   outline: "none",
+//   boxShadow: 24,
+//   p: 4,
+// };
 
 export default function LoginModal({ open, handleClose, setLoggedIn }) {
   const [isLogin, setLogin] = React.useState(true);
@@ -45,7 +45,7 @@ export default function LoginModal({ open, handleClose, setLoggedIn }) {
 
   function handleLoginChange(e) {
     if (e.target.name == "email") {
-      console.log(e.target.value);
+      // console.log(e.target.value);
       setLoginForm({
         ...LoginForm,
         email: e.target.value,
@@ -53,7 +53,7 @@ export default function LoginModal({ open, handleClose, setLoggedIn }) {
     }
 
     if (e.target.name == "password") {
-      console.log(e.target.value);
+      // console.log(e.target.value);
       setLoginForm({
         ...LoginForm,
         password: e.target.value,
@@ -119,7 +119,7 @@ export default function LoginModal({ open, handleClose, setLoggedIn }) {
 
   function handleSignUpChange(e) {
     if (e.target.name == "email") {
-      console.log(e.target.value);
+      // console.log(e.target.value);
       setSignUpForm({
         ...SignUpForm,
         email: e.target.value,
@@ -127,7 +127,7 @@ export default function LoginModal({ open, handleClose, setLoggedIn }) {
     }
 
     if (e.target.name == "password") {
-      console.log(e.target.value);
+      // console.log(e.target.value);
       setSignUpForm({
         ...SignUpForm,
         password: e.target.value,
@@ -135,7 +135,7 @@ export default function LoginModal({ open, handleClose, setLoggedIn }) {
     }
 
     if (e.target.name == "confrim-password") {
-      console.log(e.target.value);
+      // console.log(e.target.value);
       setSignUpForm({
         ...SignUpForm,
         confirm_password: e.target.value,
@@ -178,7 +178,7 @@ export default function LoginModal({ open, handleClose, setLoggedIn }) {
         });
 
         if (response.status == 200) {
-          console.log(response.data.message);
+          // console.log(response.data.message);
           navigate("/complete-profile", { state: SignUpForm.email });
         }
       } else {
@@ -209,7 +209,7 @@ export default function LoginModal({ open, handleClose, setLoggedIn }) {
         className="border-0"
         sx={{ outline: "none", border: "none" }}
       >
-        <Box sx={style} className="rounded-3 border-0 p-4">
+        <Box  className="rounded-3 border-0 p-4 auth">
           <div className="d-flex justify-content-between mb-3">
             <h3 className="h4">{isLogin ? "Login" : "Sign Up"}</h3>
             <CloseIcon

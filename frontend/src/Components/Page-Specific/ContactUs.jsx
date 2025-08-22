@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import facebook  from '../assets/facebook_icon.svg'
-import  instagram from '../assets/instagram_icon.svg'
+import facebook  from '../../assets/facebook_icon.svg'
+import  instagram from '../../assets/instagram_icon.svg'
 import toast, { Toaster } from "react-hot-toast";
 import axios from 'axios'
 
@@ -18,7 +18,6 @@ export default function ContactUs() {
     const success = (message) => toast.success(message);
 
     function handleNameChange(e){
-      console.log(e.target.value)
       setContactForm({
         ...ContactForm,
         name: e.target.value
@@ -26,7 +25,6 @@ export default function ContactUs() {
     }
 
     function handleEmailChange(e){
-      console.log(e.target.value)
       setContactForm({
         ...ContactForm,
         email: e.target.value
@@ -34,7 +32,6 @@ export default function ContactUs() {
     }
 
     function handlePhoneNumberChange(e){
-      console.log(e.target.value)
       setContactForm({
         ...ContactForm,
         phone_number: e.target.value
@@ -42,7 +39,6 @@ export default function ContactUs() {
     }
 
     function handleSubjectChange(e){
-      console.log(e.target.value)
       setContactForm({
         ...ContactForm,
         subject: e.target.value
@@ -50,7 +46,6 @@ export default function ContactUs() {
     }
 
     function handleMessageChange(e){
-      console.log(e.target.value)
       setContactForm({
         ...ContactForm,
         message: e.target.value

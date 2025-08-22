@@ -1,4 +1,3 @@
-import React from "react";
 import CardContent from "@mui/joy/CardContent";
 import CardCover from "@mui/joy/CardCover";
 import Card from "@mui/joy/Card";

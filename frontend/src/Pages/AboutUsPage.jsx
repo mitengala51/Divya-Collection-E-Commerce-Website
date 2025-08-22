@@ -1,7 +1,7 @@
-import React from 'react'
-import Navbar from '../Components/Navbar'
-import Footer from '../Components/footer'
-import AboutUs from '../Components/About-Us'
+import Navbar from '../Components/layout/Navbar'
+import Footer from '../Components/layout/Footer'
+import AboutUs from '../Components/Page-Specific/About-Us'
+
 
 export default function AboutUsPage() {
   return (

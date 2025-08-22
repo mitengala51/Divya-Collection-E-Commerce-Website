@@ -4,8 +4,8 @@ import Card from '@mui/joy/Card';
 import CardCover from '@mui/joy/CardCover';
 import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
-import ci_7 from '../assets/ci_7.jpg'
-import ci_8 from '../assets/ci_8.jpg'
+import ci_7 from '../../assets/ci_7.jpg'
+import ci_8 from '../../assets/ci_8.jpg'
 
 export default function CategoryImages() {
   return (

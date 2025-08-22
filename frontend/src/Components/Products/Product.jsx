@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import AspectRatio from "@mui/joy/AspectRatio";
@@ -11,32 +11,13 @@ import Link from "@mui/joy/Link";
 import Typography from "@mui/joy/Typography";
 import axios from "axios";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-import p_1 from "../assets/Products Images/p_1.jpg";
-import p_2 from "../assets/Products Images/p_2.jpg";
-import p_3 from "../assets/Products Images/p_3.jpg";
-import p_4 from "../assets/Products Images/p_4.jpg";
 import toast, { Toaster } from "react-hot-toast";
 import "./Product.css";
 import { Link as RouterLink } from "react-router-dom";
 
-export default function Product() {
-  const [result, setResult] = useState([]);
-
-  var data;
+export default function Product(props) {
 
   const notify = () => toast.success("Added to cart!");
-
-  useEffect(() => {
-    async function fetchdata() {
-      data = await axios.get(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/api/all-products`
-      );
-      console.log(data.data.all_products[0].image_url);
-      setResult(data.data.all_products);
-    }
-
-    fetchdata();
-  }, []);
 
   const responsive = {
     desktop: {
@@ -63,8 +44,8 @@ export default function Product() {
 
   async function handleClick(index) {
     try {
-      console.log(result);
-      if (result[index].length > 0) {
+      console.log(props.product_data[index]);
+      if (props.product_data.length === 0) {
         return console.log("Data not found");
       }
 
@@ -72,13 +53,13 @@ export default function Product() {
         .post(
           "http://localhost:3000/api/add-to-cart",
           {
-            id: result[index].id,
-            title: result[index].title,
-            price: result[index].price,
-            brand: result[index].brand,
-            size: result[index].size,
-            category: result[index].category,
-            image_url: result[index].image_url,
+            id: props.product_data[index].id,
+            title: props.product_data[index].title,
+            price: props.product_data[index].price,
+            brand: props.product_data[index].brand,
+            size: props.product_data[index].size,
+            category: props.product_data[index].category,
+            image_url: props.product_data[index].image_url[0],
           },
           {
             withCredentials: true,
@@ -92,6 +73,20 @@ export default function Product() {
     }
   }
 
+  if(props.spinner){
+        return (
+      <div className="d-flex justify-content-center">
+        <div
+          className="spinner-border"
+          style={{ width: "3rem", height: "3rem" }}
+          role="status"
+        >
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
         <Toaster />
@@ -101,7 +96,7 @@ export default function Product() {
         className="px-1 py-2 m-2"
         style={{ height: "350px" }}
       >
-        {result.map((data, index) => {
+        {props.product_data.map((data, index) => {
           return (
             <Card
               key={data.id}
@@ -111,7 +106,7 @@ export default function Product() {
               <CardOverflow>
                 <AspectRatio ratio="1" sx={{ minWidth: 300 }}>
                   <img
-                    src={`/Products Images/${data.image_url}.jpg`}
+                    src={`/Products Images/${data.image_url[0]}.jpg`}
                     loading="lazy"
                     alt=""
                     style={{ objectFit: "cover" }}

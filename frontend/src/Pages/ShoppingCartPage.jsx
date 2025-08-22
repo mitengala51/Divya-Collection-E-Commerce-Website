@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import Navbar from "../Components/Navbar";
-import Footer from "../Components/footer";
-import CartProduct from "../Components/CartProduct";
-import TotalCartTable from "../Components/TotalCartTable";
+import { useState, useEffect } from "react";
+import Navbar from "../Components/layout/Navbar";
+import Footer from "../Components/layout/Footer";
+import CartProduct from "../Components/Cart/CartProduct";
+import TotalCartTable from "../Components/Cart/TotalCartTable";
 import axios from "axios";
 
 export default function ShoppingCartPage() {
