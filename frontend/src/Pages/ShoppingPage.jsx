@@ -84,7 +84,7 @@ export default function Shopping() {
               onChange={debounce(SearchProduct, 500)}
             ></input>
 
-            <div className="d-flex justify-content-center p-2 align-items-center bg-white text-black rounded-lg rounded-end-5 border-0" onClick={SearchProduct} style={{cursor:"pointer"}}>
+            <div className="d-flex justify-content-center p-2 align-items-center bg-white text-black rounded-lg rounded-end-5 border-0">
 
               <Search size={22} className="m-1 me-2" />
             </div>

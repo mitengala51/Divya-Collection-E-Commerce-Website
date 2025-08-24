@@ -10,6 +10,7 @@ import axios from "axios";
 
 export default function HomePage() {
   const [result, setResult] = useState([]);
+  const [best_selling, setBestSelling] = useState([])
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,6 +20,7 @@ export default function HomePage() {
           `${import.meta.env.VITE_REACT_APP_API_URL}/api/all-products`
         );
         // console.log(data.data.all_products[0].image_url);
+        setBestSelling(data.data.all_products.filter((item) => item.best_selling))
         setResult(data.data.all_products);
       } catch (error) {
         console.log(error);
@@ -39,7 +41,7 @@ export default function HomePage() {
       <Header title="NEW ARRIVAL" />
       <Product product_data={result} spinner={loading}/>
       <Header title="BEST SELLING" />
-      <Product product_data={result}spinner={loading} />
+      <Product product_data={best_selling} spinner={loading} />
       <Header title="CATEGORY" hide={true} />
       <CategoryImages />
       <Footer />

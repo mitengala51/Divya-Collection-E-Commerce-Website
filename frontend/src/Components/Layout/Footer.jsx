@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
-import './Footer.css'
+import "./Footer.css";
 
 export default function Footer() {
   return (
@@ -52,35 +52,46 @@ export default function Footer() {
         <p className="col-md-4 mb-0 text-body-secondary">
           © 2025 Company, Inc
         </p>{" "}
-        <a
-          href="/"
+        <Link
+          to="/"
           className="col-md-4 d-flex align-items-center justify-content-center mb-md-0 me-md-auto link-body-emphasis text-decoration-none"
           aria-label="Bootstrap"
         >
           {" "}
           <h4 className="mb-0">Divya Collection</h4>
-        </a>{" "}
+        </Link>{" "}
         <ul className="nav col-md-4 justify-content-end">
           {" "}
           <li className="nav-item">
-            <a href="#" className="nav-link px-2 text-body-secondary">
+            <Link to="/" className="nav-link px-2 text-body-secondary">
               Home
-            </a>
+            </Link>
           </li>{" "}
           <li className="nav-item">
-            <a href="#" className="nav-link px-2 text-body-secondary">
+            <Link to="/about-Us" className="nav-link px-2 text-body-secondary">
               About
-            </a>
+            </Link>
           </li>{" "}
           <li className="nav-item">
-            <a href="#" className="nav-link px-2 text-body-secondary">
+            <Link
+              to="/contact-Us"
+              className="nav-link px-2 text-body-secondary"
+            >
               Contact
-            </a>
+            </Link>
           </li>{" "}
           <li className="nav-item">
-            <a href="#" className="nav-link px-2 text-body-secondary">
+            <Link to="/shopping" className="nav-link px-2 text-body-secondary">
+              Shopping
+            </Link>
+          </li>{" "}
+          <li className="nav-item">
+            <Link
+              to="/shopping-cart"
+              className="nav-link px-2 text-body-secondary"
+            >
               Cart
-            </a>
+            </Link>
           </li>{" "}
         </ul>{" "}
       </footer>

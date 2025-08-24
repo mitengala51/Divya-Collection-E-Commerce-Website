@@ -12,11 +12,11 @@ import './Brands.css'
 export default function Brands() {
   return (
     <Marquee pauseOnHover={false} className='mb-4 mt-1 brands-div' style={{backgroundColor: 'white'}}>
-      <div className='container p-3'><img src={l1} alt="any" width={300} height={100}/></div>
-      <div className='container p-3'><img src={l2} alt="any" width={300} height={100}/></div>
-      <div className='container p-3'><img src={l3} alt="any" width={300} height={100}/></div>
-      <div className='container p-3'><img src={l6} alt="any" width={300} height={100}/></div>
-      <div className='container p-3'><img src={l7} alt="any" width={300} height={100}/></div>         
+      <div className='container p-3'><img src={l1} alt="gucci" width={300} height={100}/></div>
+      <div className='container p-3'><img src={l2} alt="tory burch" width={300} height={100}/></div>
+      <div className='container p-3'><img src={l3} alt="chanel" width={300} height={100}/></div>
+      <div className='container p-3'><img src={l6} alt="michael kors" width={300} height={100}/></div>
+      <div className='container p-3'><img src={l7} alt="coach" width={300} height={100}/></div>         
     </Marquee>
   )
 }
