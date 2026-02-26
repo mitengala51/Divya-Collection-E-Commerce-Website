@@ -1,15 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useRazorpay } from "react-razorpay";
 import axios from "axios";
+import toast from "react-hot-toast";
+// import { Toaster } from "react-hot-toast"
+import { LoggedIn } from "../context/loggedIn";
 
 export default function TotalCartTable({ totalItems, price, quantity }) {
 
-  const [totalPrice, setTotalPrice] = useState(0)
+  const { loggedIn } = useContext(LoggedIn)
+
   console.log(price)
 
   const {Razorpay} = useRazorpay();
 
   const RAZORPAY_KEY_ID = import.meta.env.VITE_RAZOR_PAY_KEY_ID;
+
+  const notify = (message) => toast.error(message);
 
   const handlePayment = async () => {
     try {
@@ -109,7 +115,7 @@ export default function TotalCartTable({ totalItems, price, quantity }) {
       </div>
 
       <div className="d-grid gap-2 col-12 mx-auto">
-        <button className="btn btn-primary" type="button" onClick={handlePayment}>
+        <button className="btn btn-primary" type="button" onClick={() =>{loggedIn? handlePayment() : notify("Almost there! Please sign in to order")}}>
           Proceed to Checkout
         </button>
       </div>
