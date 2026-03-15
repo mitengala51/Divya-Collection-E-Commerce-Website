@@ -38,22 +38,28 @@ export default function ProductDescription({ data }) {
 
   return (
     <div className="col">
-         <Toaster />
+      <Toaster />
       <p className="col h1">{data[0]?.title}</p>
       <p className="col h2">Rs {data[0]?.price}</p>
       <p className="col pt-2" style={style}>
         {data[0]?.short_description}
       </p>
       <div className="col">
+
         <p className="col h5 my-4">
           Category: <span className="fw-normal">{data[0]?.category}</span>
         </p>
+
         <p className="col h5 my-4">
           Brand: <span className="fw-normal">{data[0]?.brand}</span>
         </p>
-        <p className="col h5 my-4">
-          Size: <span className="fw-normal">{data[0]?.size}</span>
-        </p>
+
+        {data[0]?.size && (
+          <p className="col h5 my-4">
+            Size: <span className="fw-normal">{data[0]?.size}</span>
+          </p>
+        )}
+        
       </div>
       <p className="col h4">Detailed Description</p>
       <p className="col" style={style}>
@@ -61,14 +67,14 @@ export default function ProductDescription({ data }) {
       </p>
       <div className="col">
         {" "}
-          <Button
-            size="lg"
-            sx={{ backgroundColor: "#1976d2", padding: "12px 30px 12px 30px" }}
-            className="fs-5 fw-normal my-2"
-            onClick={handleClick}
-          >
-            Add to cart
-          </Button>
+        <Button
+          size="lg"
+          sx={{ backgroundColor: "#1976d2", padding: "12px 30px 12px 30px" }}
+          className="fs-5 fw-normal my-2"
+          onClick={handleClick}
+        >
+          Add to cart
+        </Button>
       </div>
     </div>
   );

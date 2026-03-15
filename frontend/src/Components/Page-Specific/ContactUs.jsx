@@ -1,7 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import facebook  from '../../assets/facebook_icon.svg'
-import  instagram from '../../assets/instagram_icon.svg'
 import toast, { Toaster } from "react-hot-toast";
 import axios from 'axios'
 
@@ -227,8 +225,8 @@ export default function ContactUs() {
                 <FacebookIcon />
               </Link> */}
 
-              <Link><img src={facebook} alt="" width={30} height={30} className="me-3"/></Link>
-              <Link><img src={instagram} alt="" width={30} height={30}/></Link>
+              <Link><img src={`/Social Media Icons/facebook_icon.svg`} alt="" width={30} height={30} className="me-3"/></Link>
+              <Link><img src={`/Social Media Icons/instagram_icon.svg`} alt="" width={30} height={30}/></Link>
             </div>
             </div>
 

@@ -16,7 +16,3 @@
     cursor: pointer;
 }
 
-.img-fluid{
-    height: fit-content;
-    object-fit: cover;
-}

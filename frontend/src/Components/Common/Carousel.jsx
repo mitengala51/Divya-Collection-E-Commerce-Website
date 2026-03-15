@@ -1,11 +1,9 @@
-import ci_2 from "../../assets/ci_2.jpg";
-import ci_3 from "../../assets/ci_3.jpg";
-import ci_4 from '../../assets/ci_6.jpg'
+import { Link } from "react-router";
 
 export default function Carousel() {
   return (
     <>
-      <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
+      {/* <div id="myCarousel" className="carousel slide" data-bs-ride="carousel">
         <div className="carousel-indicators">
           <button
             type="button"
@@ -33,7 +31,7 @@ export default function Carousel() {
         <div className="carousel-inner">
           <div className="carousel-item">
             <img
-              src={ci_4}
+              src={`/Carousel Images/New Collection.png`}
               alt="Product"
               style={{ width: "100%", height: "560px", objectFit: "cover" }}
             />
@@ -44,18 +42,13 @@ export default function Carousel() {
                 <p>
                 Discover our handpicked collection of stylish footwear, chic purses,<br></br> and everyday essentials crafted just for her. Step into fashion made <br></br> for every walk of life.
                 </p>
-                <p>
-                  {/* <a className="btn btn-lg btn-primary" href="#">
-                    Sign up today
-                  </a> */}
-                </p>
               </div>
             </div>
           </div>
           <div className="carousel-item">
 
             <img
-              src={ci_2}
+              src={`/Carousel Images/Shoes and Wallet.jpg`}
               alt="Product"
               style={{ width: "100%", height: "560px", objectFit: "cover" }}
             />
@@ -67,16 +60,13 @@ export default function Carousel() {
                 Explore sleek formal shoes, rugged sandals, and casual must-haves designed for modern men. Step up your look with ease and attitude.
                 </p>
                 <p>
-                  {/* <a className="btn btn-lg btn-primary" href="#">
-                    Learn more
-                  </a> */}
                 </p>
               </div>
             </div>
           </div>
           <div className="carousel-item active">
             <img
-              src={ci_3}
+              src={`/Carousel Images/Travel-Bags.jpg`}
               alt="Product"
               style={{ width: "100%", height: "560px", objectFit: "cover" }}
             />
@@ -88,9 +78,6 @@ export default function Carousel() {
                 Sleek laptop bags and professional carriers designed for durability, <br></br> functionality, and the everyday hustle. Stay organized, look sharp.
                 </p>
                 <p>
-                  {/* <a className="btn btn-lg btn-primary" href="#">
-                    Browse gallery
-                  </a> */}
                 </p>
               </div>
             </div>
@@ -119,6 +106,130 @@ export default function Carousel() {
             aria-hidden="true"
           ></span>
           <span className="visually-hidden">Next</span>
+        </button>
+      </div> */}
+
+      {/* <div id="carouselExampleIndicators" class="carousel slide">
+        <div class="carousel-indicators">
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src={`/Carousel Images/New Collection.png`}
+              class="d-block w-100 object-fit-cover"
+              alt="New Collection"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src={`/Carousel Images/Trending Now.png`}
+              class="d-block w-100"
+              alt="Trending Now"
+            />
+          </div>
+          <div class="carousel-item">
+            <img
+              src={`/Carousel Images/Best Selling.png`}
+              class="d-block w-100"
+              alt="Best Selling"
+            />
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleIndicators"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div> */}
+
+      <div
+        id="carouselExampleAutoplaying"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <Link to="/product-detail" state={{ id: "P004" }} data-bs-interval="5000">
+            <div class="carousel-item active">
+              <img
+                src={`/Carousel Images/New Collection.png`}
+                class="d-block w-100 object-fit-cover"
+                alt="New Collection"
+              />
+            </div>
+          </Link>
+
+          <Link to="/product-detail" state={{ id: "P003" }}>
+            {" "}
+            <div class="carousel-item" data-bs-interval="5000">
+              <img
+                src={`/Carousel Images/Trending Now.png`}
+                class="d-block w-100"
+                alt="Trending Now"
+              />
+            </div>
+          </Link>
+
+          <Link to="/product-detail" state={{ id: "P005" }}>
+            {" "}
+            <div class="carousel-item" data-bs-interval="5000">
+              <img
+                src={`/Carousel Images/Best Selling.png`}
+                class="d-block w-100"
+                alt="Best Selling"
+              />
+            </div>
+          </Link>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleAutoplaying"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleAutoplaying"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
         </button>
       </div>
     </>

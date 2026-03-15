@@ -7,6 +7,9 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import nodemailer from "nodemailer";
+import { GoogleGenAI } from "@google/genai";
+// import fs from "fs"
+// import multer from "multer";
 
 dotenv.config();
 
@@ -83,6 +86,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+// const upload = multer({ dest: 'uploads/' })
 
 async function verifyToken(req, res, next) {
   const token = await req.cookies.token;
@@ -520,6 +525,86 @@ app.get("/api/search", async (req, res) => {
     console.log(error);
   }
 });
+
+// Gemini API
+app.post("/api/chatbot", async (req, res) => {
+  try {
+    const chatMessage = req.body.UserMessage
+    console.log("ChatMessage: ", chatMessage);
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: chatMessage,
+      config: {
+        systemInstruction: `
+      
+      Act like the best virtual assistant for the e-commerce website Divya Collection, which is an offline retail shop and has a website that sells online. It is not like other e-commerce websites, which sell A to Z products; we are only selling handbags, purses, bags, ladies' footwear, men's footwear, men's wallets, men's socks, and travel bags, but for now, on the online shopping website, we have only listed ladies' footwear and handbags. There are many brands available: Michael Kors, Gucci, Tory Burch, Chanel bags, and Coach. 
+
+🛍️ Product List for Website
+1. Prada Nylon Backpack: Rs 1999
+2. Chanel Classic Flap Bag: Rs 5399
+3. Michael Kors Selma Satchel: Rs 3499
+4. Tory Burch Miller Sandals: Rs 1799
+5. Black Strapped Flat Chappal: Rs 1799
+6. Cream Strap Flat Chappal: Rs 1499
+7. Red Flat Chappal: Rs 1119
+8. Green Low Heel Chappal: Rs 2499
+9. Gucci GG Marmont Mini Bag: Rs 1249
+
+this are the prodcuts available at e-commerce online store. Give answers in short. Don't start with welcome message. You have to help customers to find the right product according to their requirments.
+make sure the customer should find the product he/she is looking for. We follow the policy of customer is king. Give him/her like a king or queen treatment in the chat
+      `,
+      },
+    });
+
+    console.log("Gemini API: ", response?.text)
+    res.status(200).json({ AiMessage: response?.text })
+  } catch (error) {
+    console.log("Error: ", error)
+  }
+})
+
+// Gemini Text to image and Image to Image Generation API
+// app.post("/api/chatbot/image-generation", upload.single('file'), async (req, res)=>{
+//   try {
+//     console.log(req.file)
+
+//     if(!req.file) res.status(404).json({ message: "Image not uploaded" })
+    
+//     const imagePath = req?.file?.path;
+//     const imageData = fs.readFileSync(imagePath);
+//     const base64Image = imageData.toString("base64");
+
+//     const prompt = [
+//     { text: "Create a picture of my cat eating a nano-banana in a" +
+//             "fancy restaurant under the Gemini constellation" },
+//     {
+//       inlineData: {
+//         mimeType: "image/png",
+//         data: base64Image,
+//       },
+//     },
+//   ];
+
+//   const response = await ai.models.generateContent({
+//     model: "gemini-2.5-flash-image",
+//     contents: prompt,
+//   });
+
+//   for (const part of response.candidates[0].content.parts) {
+//     if (part.text) {
+//       console.log(part.text);
+//     } else if (part.inlineData) {
+//       const imageData = part.inlineData.data;
+//       const buffer = Buffer.from(imageData, "base64");
+//       fs.writeFileSync("gemini-native-image.png", buffer);
+//       console.log("Image saved as gemini-native-image.png");
+//     }
+//   }
+
+//   } catch (error) {
+//     console.log("Image Generation: ", error);
+//   }
+// })
 
 app.listen(3000, () => {
   console.log("Server is Listinening to port 3000");

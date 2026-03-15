@@ -1,60 +1,61 @@
-import * as React from 'react';
-import Box from '@mui/joy/Box';
-import Card from '@mui/joy/Card';
-import CardCover from '@mui/joy/CardCover';
-import CardContent from '@mui/joy/CardContent';
 import Typography from '@mui/joy/Typography';
-import ci_7 from '../../assets/ci_7.jpg'
-import ci_8 from '../../assets/ci_8.jpg'
+import { Grid } from '@mui/material';
 
 export default function CategoryImages() {
   return (
     <>
-      <Box
-      component="ul"
-      className='px-3'
-      sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', p: 0, m: 0 }}
-    >
-      <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
-        <CardCover>
-          <img
-            src={ci_7}
-            // srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800&dpr=2 2x"
-            loading="lazy"
-            alt=""
-          />
-        </CardCover>
-        <CardContent>
-          <Typography
-            level="body-lg"
-            textColor="#fff"
-            sx={{ fontWeight: 'lg', mt: { xs: 12, sm: 18, lg: 50, fontSize: '40px' } }}
-          >
-            Men
-          </Typography>
-        </CardContent>
-      </Card>
-      <Card component="li" sx={{ minWidth: 300, flexGrow: 1 }}>
-      <CardCover>
-          <img
-            src={ci_8}
-            // srcSet="https://images.unsplash.com/photo-1502657877623-f66bf489d236?auto=format&fit=crop&w=800&dpr=2 2x"
-            loading="lazy"
-            alt=""
-          />
-        </CardCover>
-        <CardContent>
-          <Typography
-            level="body-lg"
-            textColor="#fff"
-            sx={{ fontWeight: 'lg', mt: { xs: 12, sm: 18, lg: 50 }, fontSize: '40px' }}
-          >
-            Women
-          </Typography>
-        </CardContent>
-      </Card>
-    </Box>
+      <Grid container spacing={2} className="px-4">
+        <Grid size={{ sm: 12, md: 6, lg: 6, xl: 6 }}>
+          {" "}
+
+          <div className="position-relative">
+            <img
+              src="/Category Images/Men's-Category.jpg"
+              loading="lazy"
+              alt="men category"
+              className="img-fluid rounded-3 border border-grey"
+            />
+            <div style={{ position: "absolute", bottom: "2%", left: "4%" }}>
+              <Typography
+                level="body-lg"
+                textColor="#fff"
+                sx={{
+                  fontWeight: "lg",
+                  mt: { xs: 12, sm: 18, lg: 50 },
+                  fontSize: "40px",
+                }}
+              >
+                Men
+              </Typography>
+            </div>
+          </div>
+        </Grid>
+
+        <Grid size={{ sm: 12, md: 6, lg: 6, xl: 6 }}>
+          {" "}
+          <div className="position-relative">
+            <img
+              src="/Category Images/Women's-Category.jpg"
+              loading="lazy"
+              alt="men category"
+              className="img-fluid rounded-3 border border-grey"
+            />
+            <div style={{ position: "absolute", bottom: "2%", left: "4%" }}>
+              <Typography
+                level="body-lg"
+                textColor="#fff"
+                sx={{
+                  fontWeight: "lg",
+                  mt: { xs: 12, sm: 18, lg: 50 },
+                  fontSize: "40px",
+                }}
+              >
+                Women
+              </Typography>
+            </div>
+          </div>
+        </Grid>
+      </Grid>
     </>
-  
   );
 }
