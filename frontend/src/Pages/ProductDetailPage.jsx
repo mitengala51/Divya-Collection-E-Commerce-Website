@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import ProductImageGallery from "../Components/Products/ProductImageGallery";
-import Navbar from "../Components/layout/Navbar";
+import Navbar from "../Components/Layout/Navbar";
 import ProductDescription from "../Components/Products/ProductDescription";
 import ProductReview from "../Components/Products/ProductReview";
-import Header from "../Components/common/Header";
+import Header from "../Components/Common/Header";
 import Product from "../Components/Products/Product";
-import Footer from "../Components/layout/Footer";
+import Footer from "../Components/Layout/Footer";
 import { useLocation } from "react-router";
 import axios from "axios";
-import Loader from "../Components/common/Loader";
+import Loader from "../Components/Common/Loader";
 
 export default function ProductDetailPage() {
   const [result, setResult] = useState([]);

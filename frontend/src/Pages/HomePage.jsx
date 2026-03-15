@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import Navbar from "../Components/layout/Navbar";
+import Navbar from "../Components/Layout/Navbar";
 import Carousel from "../Components/Common/Carousel";
-import Header from "../Components/common/Header";
+import Header from "../Components/Common/Header";
 import Product from "../Components/Products/Product";
 import Brands from "../Components/Infinite-Brand-Carousel/Brands";
 import CategoryImages from "../Components/Category/CategoryImages";
-import Footer from "../Components/layout/Footer";
+import Footer from "../Components/Layout/Footer";
 import axios from "axios";
 
 export default function HomePage() {

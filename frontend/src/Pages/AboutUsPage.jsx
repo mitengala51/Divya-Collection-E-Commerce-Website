@@ -1,5 +1,5 @@
-import Navbar from '../Components/layout/Navbar'
-import Footer from '../Components/layout/Footer'
+import Navbar from '../Components/Layout/Navbar'
+import Footer from '../Components/Layout/Footer'
 import AboutUs from '../Components/Page-Specific/About-Us'
 
 

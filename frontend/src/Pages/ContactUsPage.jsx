@@ -1,7 +1,6 @@
-import React from 'react'
-import Navbar from '../Components/layout/Navbar'
-import Footer from '../Components/layout/Footer'
-import ContactUs from '../Components/page-specific/ContactUs'
+import Navbar from '../Components/Layout/Navbar'
+import Footer from '../Components/Layout/Footer'
+import ContactUs from '../Components/Page-Specific/ContactUs'
 
 
 export default function ContactUsPage() {

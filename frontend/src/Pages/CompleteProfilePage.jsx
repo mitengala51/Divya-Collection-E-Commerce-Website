@@ -1,4 +1,3 @@
-import React from 'react'
 import CompleteProfile from '../Components/Page-Specific/CompleteProfile'
 
 export default function CompleteProfilePage() {
