@@ -81,7 +81,7 @@ function App() {
         <Route path="/about-Us" element={<AboutUsPage />} />
         <Route path="/contact-Us" element={<ContactUsPage />} />
         <Route path="/shopping" element={<ShoppingPage />} />
-        <Route path="/demo" element={<Demo />} />
+        {/* <Route path="/demo" element={<Demo />} /> */}
       </Routes>
       </LoggedIn.Provider>
 
