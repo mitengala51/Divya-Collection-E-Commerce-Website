@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./Pages/HomePage";
 import ProductDetailPage from "./Pages/ProductDetailPage";
-import Demo from "./Pages/Demo";
+// import Demo from "./Pages/Demo";
 import ShoppingCartPage from "./Pages/ShoppingCartPage";
 import CompleteProfilePage from "./Pages/CompleteProfilePage";
 import AboutUsPage from "./Pages/AboutUsPage";
