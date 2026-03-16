@@ -14,7 +14,7 @@ export default function ProductDescription({ data }) {
         return console.log("Data not found");
       }
 
-      await axios.post(`${import.meta.env.FRONTEND_URL}/api/add-to-cart`, {
+      await axios.post(`${import.meta.env.VITE_REACT_APP_API_URL}/api/add-to-cart`, {
         id: data[0].id,
         title: data[0].title,
         price: data[0].price,

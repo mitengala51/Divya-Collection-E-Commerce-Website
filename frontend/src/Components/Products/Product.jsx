@@ -50,7 +50,7 @@ export default function Product(props) {
 
       await axios
         .post(
-          `${import.meta.env.FRONTEND_URL}/api/add-to-cart`,
+          `${import.meta.env.VITE_REACT_APP_API_URL}/api/add-to-cart`,
           {
             id: props.product_data[index].id,
             title: props.product_data[index].title,
