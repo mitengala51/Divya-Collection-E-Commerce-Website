@@ -100,7 +100,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 async function verifyToken(req, res, next) {
   const token = await req.cookies.token;
-
+  console.log("JWT Token: ", token)
   if (!token) {
     res.status(404).json({ message: "Token not found" });
   }
@@ -359,7 +359,8 @@ app.post("/api/complete-profile", async (req, res) => {
 // Google Auth
 
 app.post("/api/google-login", async (req, res) => {
-  const { name, email } = req.body;
+  try {
+      const { name, email } = req.body;
   console.log(name, email);
   const user = await User.findOne({
     full_name: name,
@@ -378,8 +379,13 @@ app.post("/api/google-login", async (req, res) => {
     httpOnly: true,
     maxAge: 3600000,
     secure: true,
+    sameSite: "None",
   });
   res.status(200).json({ message: "Login Successfull" });
+  } catch (error) {
+    console.log("Google Login Error: ",  error)
+  }
+
 });
 
 app.post("/api/google-signup", async (req, res) => {
