@@ -89,6 +89,7 @@ app.use(
       "X-Requested-With",
       "Accept",
     ],
+    exposedHeaders: ["Access-Control-Allow-Credentials"]
   })
 );
 app.use(express.json());
@@ -380,6 +381,7 @@ app.post("/api/google-login", async (req, res) => {
     maxAge: 3600000,
     secure: true,
     sameSite: "None",
+    partitioned: true
   });
   res.status(200).json({ message: "Login Successfull" });
   } catch (error) {
