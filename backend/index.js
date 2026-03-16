@@ -80,6 +80,15 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL,
     credentials: true,
+    methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
+    allowedHeaders: [
+      "Access-Control-Allow-Origin",
+      "Content-Type",
+      "Authorization",
+      "Origin",
+      "X-Requested-With",
+      "Accept",
+    ],
   })
 );
 app.use(express.json());
@@ -368,7 +377,7 @@ app.post("/api/google-login", async (req, res) => {
   res.cookie("token", token, {
     httpOnly: true,
     maxAge: 3600000,
-    secure: false,
+    secure: true,
   });
   res.status(200).json({ message: "Login Successfull" });
 });
