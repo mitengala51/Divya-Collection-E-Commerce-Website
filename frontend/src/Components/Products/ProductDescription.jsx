@@ -4,7 +4,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 export default function ProductDescription({ data }) {
 
-      const notify = () => toast.success('Added to cart!');
+  const notify = () => toast.success('Added to cart!');
 
   async function handleClick() {
     try {
@@ -14,7 +14,7 @@ export default function ProductDescription({ data }) {
         return console.log("Data not found");
       }
 
-      await axios.post("http://localhost:3000/api/add-to-cart", {
+      await axios.post(`${import.meta.env.FRONTEND_URL}/api/add-to-cart`, {
         id: data[0].id,
         title: data[0].title,
         price: data[0].price,
