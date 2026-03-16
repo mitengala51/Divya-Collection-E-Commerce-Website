@@ -282,6 +282,7 @@ app.post("/api/login", async (req, res) => {
     }
   } catch (error) {
     // res.stajson({ error });
+    console.log(error)
   }
 });
 
