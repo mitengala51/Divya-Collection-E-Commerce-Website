@@ -10,6 +10,7 @@ export default function ShoppingCartPage() {
   const [totalPrice, setTotalPrice] = useState([]);
   const [cartDeleted, setCartDeleted] = useState(false);
   const [OrderQuantity, setOrderQuantity] = useState(1);
+  const [volume, setVolume] = useState(1)
 
   useEffect(() => {
     async function fetchdata() {
@@ -21,10 +22,12 @@ export default function ShoppingCartPage() {
           }
         );
         setCartItems(data.data.all_cart_items);
+        if(volume > 1) return
         const cost = data.data.all_cart_items.reduce(
-          (accumulator, item) => accumulator + item.price,
+          (accumulator, item) => accumulator + item?.price * item?.quantity,
           0
         );
+        // console.log("Cost: ",cost)
         setTotalPrice(cost);
       } catch (error) {
         console.log(error);
@@ -54,6 +57,7 @@ export default function ShoppingCartPage() {
                   title={data.title}
                   price={data.price}
                   brand={data.brand}
+                  productQuantity={data.quantity}
                   image_url={data.image_url}
                   cartDeleted={cartDeleted}
                   setCartDeleted={setCartDeleted}
@@ -61,6 +65,9 @@ export default function ShoppingCartPage() {
                   setTotalPrice={setTotalPrice}
                   OrderQuantity={OrderQuantity}
                   setOrderQuantity={setOrderQuantity}
+
+                  volume={volume}
+                  setVolume={setVolume}
                 />
               );
             })}

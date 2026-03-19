@@ -17,6 +17,7 @@ import { Link as RouterLink } from "react-router-dom";
 export default function Product(props) {
 
   const notify = () => toast.success("Added to cart!");
+  const errorNotify = (message) => toast.error(message);
 
   const responsive = {
     desktop: {
@@ -45,7 +46,7 @@ export default function Product(props) {
     try {
       console.log(props.product_data[index]);
       if (props.product_data.length === 0) {
-        return console.log("Data not found");
+        return errorNotify("Something Went Wrong Please Try Again later");
       }
 
       await axios
@@ -69,6 +70,7 @@ export default function Product(props) {
         });
     } catch (error) {
       console.log(error);
+      if(error.status === 401) errorNotify('Almost there! Please sign in to order')
     }
   }
 

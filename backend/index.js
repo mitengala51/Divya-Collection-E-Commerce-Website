@@ -8,6 +8,7 @@ import jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
 import nodemailer from "nodemailer";
 import { GoogleGenAI } from "@google/genai";
+import crypto from "crypto"
 // import fs from "fs"
 // import multer from "multer";
 
@@ -42,6 +43,7 @@ const CartSchema = new mongoose.Schema({
   brand: String,
   size: Number,
   image_url: String,
+  quantity: Number
 });
 
 const UserSchema = new mongoose.Schema({
@@ -101,9 +103,9 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
 async function verifyToken(req, res, next) {
   const token = await req.cookies.token;
-  console.log("JWT Token: ", token)
+  // console.log("JWT Token: ", token)
   if (!token) {
-    res.status(404).json({ message: "Token not found" });
+    res.status(401).json({ message: "Unautohorized Access and Token Not found" });
   }
 
   try {
@@ -169,6 +171,14 @@ app.post("/api/add-to-cart", verifyToken, async (req, res) => {
     console.log(req.user);
     const { id, title, price, brand, size, category, image_url } = req.body;
     console.log(id, title, price, brand, size, category, image_url);
+    const product = await Cart.find({ id: id })
+    // console.log(product)
+
+    if(product?.length > 0){
+      await Cart.updateOne({ id: id }, { $set: { quantity: product?.[0]?.quantity + 1 } })
+      return res.status(200).json({ message: "Added to cart" })
+    }
+
     await Cart.create({
       id,
       userID: req.user._id,
@@ -178,10 +188,11 @@ app.post("/api/add-to-cart", verifyToken, async (req, res) => {
       size,
       category,
       image_url,
+      quantity: 1
     });
-    res.json({ message: "Added to cart" });
+    res.status(200).json({ message: "Added to cart" });
   } catch (error) {
-    console.log(error);
+    console.log("Add to Cart Error: ", error);
   }
 });
 
@@ -220,13 +231,14 @@ app.post("/create-order", async (req, res) => {
     const options = {
       amount: req.body.amount,
       currency: "INR",
-      reciept: "receipt_" + Math.random().toString(36).substring(7),
+      // reciept: "receipt_" + Math.random().toString(36).substring(7),
       // payment_capture: 1,
     };
 
     const orders = await razorpay.orders.create(options);
     res.status(200).json({ orders });
   } catch (err) {
+    console.log("RazorPay order error: ", err)
     res.status(500).json({ error: err.message });
   }
 });
@@ -235,10 +247,10 @@ app.post("/verify-payment", async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
       req.body;
-
+    console.log(razorpay_order_id, razorpay_payment_id, razorpay_signature);
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature) return res.status(400).json({ error: "Something Went Wrong in the payement" });
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
-    const expectedSign = crypto
-      .createHmac("sha256", key_secret)
+    const expectedSign = crypto.createHmac("sha256", process.env.RAZOR_PAY_KEY_SECRET)
       .update(sign.toString())
       .digest("hex");
 
@@ -250,6 +262,7 @@ app.post("/verify-payment", async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ error: err.message });
+    console.log("Paymenet Verification Error: ", err)
   }
 });
 
@@ -361,31 +374,31 @@ app.post("/api/complete-profile", async (req, res) => {
 
 app.post("/api/google-login", async (req, res) => {
   try {
-      const { name, email } = req.body;
-  console.log(name, email);
-  const user = await User.findOne({
-    full_name: name,
-    email,
-    Google_Login: true,
-  });
-  if (!user) {
-    res.status(404).json({ message: "Sign Up with Google Account" });
-  }
-  const token = jwt.sign(
-    { _id: user._id, full_name: user.full_name },
-    JWT_SECRET_KEY,
-    { expiresIn: "1h" }
-  );
-  res.cookie("token", token, {
-    httpOnly: true,
-    maxAge: 3600000,
-    secure: true,
-    sameSite: "None",
-    partitioned: true
-  });
-  res.status(200).json({ message: "Login Successfull" });
+    const { name, email } = req.body;
+    console.log(name, email);
+    const user = await User.findOne({
+      full_name: name,
+      email,
+      Google_Login: true,
+    });
+    if (!user) {
+      res.status(404).json({ message: "Sign Up with Google Account" });
+    }
+    const token = jwt.sign(
+      { _id: user._id, full_name: user.full_name },
+      JWT_SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 3600000,
+      secure: true,
+      sameSite: "None",
+      partitioned: true
+    });
+    res.status(200).json({ message: "Login Successfull" });
   } catch (error) {
-    console.log("Google Login Error: ",  error)
+    console.log("Google Login Error: ", error)
   }
 
 });
@@ -431,27 +444,64 @@ app.post("/api/order", verifyToken, async (req, res) => {
 
     const mailForOwner = {
       from: "mitengala51@gmail.com",
-      to: "mitengala51@gmail.com",
-      subject: `🛒 New Order Received – Order ${order[order.length - 1]._id}`,
-      text: `Hi Divya Collection,
-Great news! A new order has just been placed on your store. 
-Order Details: 
-Customer Name: ${order[order.length - 1].userDetails[0].full_name} 
-Total Amount: ${order[order.length - 1].total_amount} 
-Please review the order details and begin processing it at your earliest convenience.
-Let us know if you need any assistance.`,
+      to: order[order.length - 1]?.userDetails?.[0]?.email,
+      subject: `New Order Received – Divya Collection`,
+      html: `Hi Divya Collection,
+
+<h2 style="color: #333333; text-align: center;">New Order Alert</h2>
+
+<p style="font-size: 16px; color: #555555; line-height: 1.6; text-align: center;">
+  Great news! A new order has just been placed on your store.
+</p>
+
+<div style="background-color: #f4f4f4; padding: 20px; border-radius: 8px; margin: 25px 0;">
+  <p style="margin: 8px 0; font-size: 15px; color: #333333;">
+    <strong>Order Details:</strong>
+  </p>
+  <p style="margin: 8px 0; font-size: 14px; color: #555555;">
+    Customer Name: ${order[order.length - 1].userDetails[0].full_name}
+  </p>
+  <p style="margin: 8px 0; font-size: 14px; color: #555555;">
+    Total Amount: ${order[order.length - 1].total_amount}
+  </p>
+</div>
+
+<p style="font-size: 15px; color: #555555; line-height: 1.6; text-align: center;">
+  Please review the order details and begin processing it at your earliest convenience.
+</p>
+
+<p style="font-size: 15px; color: #555555; line-height: 1.6; text-align: center;">
+  Let us know if you need any assistance.
+</p>`,
     };
 
     const mailForCustomer = {
       from: "mitengala51@gmail.com",
       to: user.email,
-      subject: `🎉 Thank You for Your Order`,
-      text: `Hi ${order[order.length - 1].userDetails[0].full_name}, 
-Thank you for your order! We’ve received it and our team is now processing it.
+      subject: `Thank You for Your Order – Divya Collection`,
+      html: `Hi ${order[order.length - 1].userDetails[0].full_name},
 
-You’ll get another update as soon as your order ships. If you have any questions in the meantime, feel free to use Contact Page in the website
-      
-Thanks again for choosing Divya Collection`,
+<h2 style="color: #333333; text-align: center;">Thank you for your order!</h2>
+
+<p style="font-size: 16px; color: #555555; line-height: 1.6; text-align: center;">
+  We’ve received it and our team is now processing it.
+</p>
+
+<hr style="border: none; border-top: 1px solid #eeeeee; margin: 25px 0;">
+
+<p style="font-size: 15px; color: #555555; line-height: 1.6; text-align: center;">
+  You’ll get another update as soon as your order ships. If you have any questions in the meantime, feel free to use Contact Page in the website
+</p>
+
+<div style="text-align: center; margin: 30px 0;">
+  <a href="#" style="background-color: #000000; color: #ffffff; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-size: 14px;">
+    Contact Us
+  </a>
+</div>
+
+<p style="font-size: 15px; color: #333333; text-align: center;">
+  Thanks again for choosing <strong>Divya Collection</strong>
+</p>`,
     };
 
     transporter.sendMail(mailForOwner, (error, info) => {
@@ -538,7 +588,7 @@ app.get("/api/search", async (req, res) => {
     const product_found = await Product.find({
       title: { $regex: product, $options: "i" },
     });
-    res.json(product_found);
+    res.status(200).json(product_found);
   } catch (error) {
     console.log(error);
   }
@@ -587,7 +637,7 @@ make sure the customer should find the product he/she is looking for. We follow 
 //     console.log(req.file)
 
 //     if(!req.file) res.status(404).json({ message: "Image not uploaded" })
-    
+
 //     const imagePath = req?.file?.path;
 //     const imageData = fs.readFileSync(imagePath);
 //     const base64Image = imageData.toString("base64");

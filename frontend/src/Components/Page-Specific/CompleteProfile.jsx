@@ -84,7 +84,7 @@ export default function CompleteProfile() {
 
   async function handleSubmit(e) {
     try {
-          e.preventDefault();
+    e.preventDefault();
 
     const response = await axios.post(
       `${import.meta.env.VITE_REACT_APP_API_URL}/api/complete-profile`,

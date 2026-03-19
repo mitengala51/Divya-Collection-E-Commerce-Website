@@ -5,6 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 export default function ProductDescription({ data }) {
 
   const notify = () => toast.success('Added to cart!');
+    const errorNotify = (message) => toast.error(message);
 
   async function handleClick() {
     try {
@@ -28,7 +29,9 @@ export default function ProductDescription({ data }) {
         notify()
       });
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      if(error.status === 401) errorNotify('Almost there! Please sign in to order')
+
     }
   }
 

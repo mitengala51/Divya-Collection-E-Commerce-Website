@@ -5,20 +5,21 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteIcon from "@mui/icons-material/Delete";
 import axios from "axios";
 
-export default function CartProduct({ id ,title, price, brand, image_url, cartDeleted , setCartDeleted, totalPrice,setTotalPrice, OrderQuantity, setOrderQuantity }) {
+export default function CartProduct({ id ,title, price, brand, productQuantity,image_url, cartDeleted , setCartDeleted, totalPrice, setTotalPrice, OrderQuantity, setOrderQuantity, volume, setVolume }) {
 
-  const [quantity, setQuantity] = useState(1);
-  const [Cartprice, setCartPrice] = useState(price);
+  const [quantity, setQuantity] = useState(productQuantity ||  1);
+  const [Cartprice, setCartPrice] = useState(price * productQuantity || price);
 
   let unitQuantity = quantity
 
-  async function deleteItem(){
+  async function deleteItem(price){
     try {
       // console.log(id)
       const response = await axios.delete(`${import.meta.env.VITE_REACT_APP_API_URL}/api/delete-cart-item/` + id)
       // console.log(response)
 
       if(response.status == 200){
+        setTotalPrice(totalPrice - price * quantity);
         setCartDeleted(!cartDeleted)
       }
     } catch (error) {
@@ -55,7 +56,9 @@ export default function CartProduct({ id ,title, price, brand, image_url, cartDe
                 setQuantity(1);
               } else {
                 setQuantity(quantity => quantity - 1);
+                // setQuantity(productQuantity - 1);
                 setOrderQuantity(oq => oq - 1)
+                setVolume(volume => volume - 1)
                 // console.log(quantity)
                 setCartPrice(Cartprice => Cartprice - price);
                 setTotalPrice(totalPrice - price)
@@ -72,6 +75,7 @@ export default function CartProduct({ id ,title, price, brand, image_url, cartDe
             onClick={() => {
               // console.log("Props Price: " + price)
               setQuantity(q => q + 1);
+              setVolume(volume => volume + 1)
               setOrderQuantity(oq => oq + 1)
               // console.log(quantity)
               unitQuantity = unitQuantity + 1
@@ -98,7 +102,7 @@ export default function CartProduct({ id ,title, price, brand, image_url, cartDe
           color="error"
           className="align-self-sm-end"
           startIcon={<DeleteIcon />}
-          onClick={deleteItem}
+          onClick={()=> deleteItem(price)}
         >
           Delete
         </Button>
