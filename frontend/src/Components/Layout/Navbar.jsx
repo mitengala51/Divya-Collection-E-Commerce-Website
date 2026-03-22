@@ -37,21 +37,18 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
-  async function handleClick() {
+  async function handleLogOut() {
     try {
-      console.log("iamclicked");
+      // console.log("iamclicked");
       const response = await axios.post(
-        `${import.meta.env.VITE_REACT_APP_API_URL}/api/Logout`,
-        {
-          credentials: "same-origin",
-        },
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/Logout`, {},
         {
           withCredentials: true,
         }
       );
       notify(response.data.message);
-      const logon = false;
-      setLoggedIn(logon);
+      // const logon = false;
+      setLoggedIn(false);
     } catch (error) {}
   }
 
@@ -87,7 +84,7 @@ export default function Navbar() {
         {loggedIn ? (
           <div className="ps-1 hide">
             <LogoutIcon
-              onClick={handleClick}
+              onClick={handleLogOut}
               sx={{ fontSize: "x-larger", cursor: "pointer" }}
             />
           </div>

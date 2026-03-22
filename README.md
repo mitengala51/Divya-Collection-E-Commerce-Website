@@ -1,19 +1,42 @@
 # Divya Collection - E-Commerce Website
 
-![Divya Collection](frontend/public/Logo%20Images/logo.png)
-
 A modern, full-stack e-commerce platform specializing in handbags and ladies' footwear. Built with React, Node.js, Express, and MongoDB.
 
-## 🌟 Features
+## � Live Demo
+
+🔗 **Live URL**: [Divya Collection](https://divya-collection-e-commerce-website-silk.vercel.app/)
+
+## 📸 Screenshots
+
+### Homepage
+![Homepage](c:\Users\ADMIN\Downloads\Screenshot_21-3-2026_20373_localhost.jpeg)
+
+### Product Search
+![Product Catalog](c:\Users\ADMIN\Downloads\Screenshot_21-3-2026_203740_localhost.jpeg)
+
+### Product Details
+![Product Details](c:\Users\ADMIN\Downloads\Screenshot_21-3-2026_204233_localhost.jpeg)
+
+### About Us
+![About Us](c:\Users\ADMIN\Downloads\Screenshot_21-3-2026_203754_localhost.jpeg)
+
+### Contact Us
+![Contact Us](c:\Users\ADMIN\Downloads\Screenshot_21-3-2026_203817_localhost.jpeg)
+
+### Shopping Cart
+![Shopping Cart](c:\Users\ADMIN\Downloads\Screenshot_22-3-2026_192826_localhost.jpeg)
+
+
+## �🌟 Features
 
 - **User Authentication**: Secure login/signup with JWT tokens and Google OAuth
 - **Product Catalog**: Browse handbags and ladies' footwear with detailed descriptions
+- **Product Search**: Search products by title with real-time results
 - **Shopping Cart**: Add, remove, and manage cart items
 - **Payment Integration**: Secure payments via Razorpay
 - **AI Chatbot**: Interactive customer support powered by Google Gemini AI
 - **Responsive Design**: Mobile-first design using Material-UI
 - **Image Gallery**: Product image galleries and carousels
-- **Order Management**: Complete order tracking and history
 - **Profile Management**: User profile completion and management
 
 ## 🛠️ Tech Stack
@@ -133,32 +156,40 @@ divya-collection-ecommerce/
 └── README.md                 # Project documentation
 ```
 
-## 🔧 Available Scripts
-
 ## 🌐 API Endpoints
 
 ### Authentication
-- `POST /api/signup` - User registration
+- `POST /api/sign-up` - User registration
 - `POST /api/login` - User login
 - `POST /api/google-login` - Google OAuth login
-- `POST /api/logout` - User logout
+- `POST /api/google-signup` - Google OAuth registration
+- `POST /api/Logout` - User logout
+
+### Profile
+- `POST /api/complete-profile` - Complete user profile information
 
 ### Products
-- `GET /api/products` - Get all products
-- `GET /api/products/:id` - Get product by ID
+- `GET /api/all-products` - Get all products
+- `GET /api/all-products/:id` - Get specific product by ID
+- `GET /api/search?product=<query>` - Search products by title
 
 ### Cart
-- `GET /api/cart/:userId` - Get user's cart
-- `POST /api/cart` - Add item to cart
-- `PUT /api/cart/:id` - Update cart item
-- `DELETE /api/cart/:id` - Remove item from cart
+- `POST /api/add-to-cart` - Add item to cart (requires authentication)
+- `GET /api/cart-items` - Get user's cart items (requires authentication)
+- `DELETE /api/delete-cart-item/:id` - Remove item from cart
 
 ### Orders
-- `POST /api/orders` - Create new order
-- `GET /api/orders/:userId` - Get user's orders
+- `POST /api/order` - Create new order (requires authentication)
+
+### Payment
+- `POST /create-order` - Create Razorpay payment order
+- `POST /verify-payment` - Verify Razorpay payment signature
+
+### Contact
+- `POST /api/contact-us` - Submit contact form
 
 ### AI Chatbot
-- `POST /api/chatbot` - Send message to AI chatbot
+- `POST /api/chatbot` - Send message to AI assistant
 
 ## 🤝 Contributing
 

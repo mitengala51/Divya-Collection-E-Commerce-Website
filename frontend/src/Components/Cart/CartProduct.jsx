@@ -27,6 +27,52 @@ export default function CartProduct({ id ,title, price, brand, productQuantity,i
     }
   }
 
+  async function decreaseQuantity() {
+    try {
+      if (quantity <= 1) {
+        setQuantity(1);
+      } else {
+        setQuantity((quantity) => quantity - 1);
+        // setQuantity(productQuantity - 1);
+        setOrderQuantity((oq) => oq - 1);
+        setVolume((volume) => volume - 1);
+        await axios.post(
+          `${import.meta.env.VITE_REACT_APP_API_URL}/api/quantity`,
+          { product_quantity: quantity - 1, product_id: id },
+          {
+            withCredentials: true,
+          },
+        );
+        setCartPrice((Cartprice) => Cartprice - price);
+        setTotalPrice(totalPrice - price);
+      }
+    } catch (error) {
+      console.log("Decrease Quantity: ", error);
+    }
+  }
+
+  async function increaseQuantity() {
+    try {
+      // console.log("Props Price: " + price)
+      setQuantity((q) => q + 1);
+      setVolume((volume) => volume + 1);
+      setOrderQuantity((oq) => oq + 1);
+      // console.log(quantity)
+      unitQuantity = unitQuantity + 1;
+      await axios.post(
+        `${import.meta.env.VITE_REACT_APP_API_URL}/api/quantity`,
+        { product_quantity: quantity + 1, product_id: id },
+        {
+          withCredentials: true,
+        },
+      );
+      setCartPrice(price * unitQuantity);
+      setTotalPrice(totalPrice + price);
+    } catch (error) {
+      console.log("Increase Quantity Error: ", error);
+    }
+  }
+
   return (
     <div className="p-3 d-flex flex-column flex-md-row gap-3 justify-content-between bg-body-tertiary rounded-3 shadow mb-3">
       <div className="d-flex flex-row gap-3">
@@ -51,19 +97,7 @@ export default function CartProduct({ id ,title, price, brand, productQuantity,i
         <div className="d-flex gap-3">
           <Button
             variant="text"
-            onClick={() => {
-              if (quantity <= 1) {
-                setQuantity(1);
-              } else {
-                setQuantity(quantity => quantity - 1);
-                // setQuantity(productQuantity - 1);
-                setOrderQuantity(oq => oq - 1)
-                setVolume(volume => volume - 1)
-                // console.log(quantity)
-                setCartPrice(Cartprice => Cartprice - price);
-                setTotalPrice(totalPrice - price)
-              }
-            }}
+            onClick={decreaseQuantity}
             sx={{ padding: "0", width: "2px", height: "30px" }}
           >
             <RemoveIcon />
@@ -72,17 +106,7 @@ export default function CartProduct({ id ,title, price, brand, productQuantity,i
 
           <Button
             variant="text"
-            onClick={() => {
-              // console.log("Props Price: " + price)
-              setQuantity(q => q + 1);
-              setVolume(volume => volume + 1)
-              setOrderQuantity(oq => oq + 1)
-              // console.log(quantity)
-              unitQuantity = unitQuantity + 1
-              // console.log("UnitQuantity Variable: " + unitQuantity)
-              setCartPrice(price * unitQuantity);
-              setTotalPrice(totalPrice + price)
-            }}
+            onClick={increaseQuantity}
             sx={{ padding: "0", width: "2px", height: "30px" }}
           >
             <AddIcon />

@@ -170,18 +170,21 @@ app.post("/api/add-to-cart", verifyToken, async (req, res) => {
   try {
     console.log(req.user);
     const { id, title, price, brand, size, category, image_url } = req.body;
-    console.log(id, title, price, brand, size, category, image_url);
-    const product = await Cart.find({ id: id })
-    // console.log(product)
+    // console.log(id, title, price, brand, size, category, image_url)
+    // console.log("Add to cart: ", req?.user?._id)
+    const product = await Cart.find({ id: id, userID: req?.user?._id })
+    // console.log("Product found: ", product)
 
     if(product?.length > 0){
       await Cart.updateOne({ id: id }, { $set: { quantity: product?.[0]?.quantity + 1 } })
       return res.status(200).json({ message: "Added to cart" })
     }
 
+    if(!req?.user?._id) return res.status(401).json({ message: "Not authorised" })
+
     await Cart.create({
       id,
-      userID: req.user._id,
+      userID: req?.user?._id,
       title,
       price,
       brand,
@@ -200,7 +203,9 @@ app.post("/api/add-to-cart", verifyToken, async (req, res) => {
 
 app.get("/api/cart-items", verifyToken, async (req, res) => {
   try {
-    const all_cart_items = await Cart.find({ userID: req.user._id });
+    // console.log("User id: ", req.user._id)
+    if(!req?.user?._id) return res.status(401).json({ message: "Not authorised" })
+    const all_cart_items = await Cart.find({ userID: req?.user?._id });
     res.json({ message: "All carts products recieved", all_cart_items });
   } catch (error) {
     console.log(error);
@@ -220,6 +225,20 @@ app.delete("/api/delete-cart-item/:id", async (req, res) => {
     res.status(200).json({ message: "Cart item removed" });
   } catch (error) {
     console.log(error);
+  }
+});
+
+// Update Quantity
+app.post("/api/quantity", verifyToken, async (req,res) => {
+  try {
+    const { product_quantity, product_id } = req.body;
+    if(!product_quantity && !product_id) return res.status(404).json({ message: "Quantity or Product ID is missing" })
+      // console.log(product_quantity)
+    await Cart.updateOne({ userID: req?.user?._id, id: product_id }, { $set: { quantity: product_quantity } })
+    // console.log("Update Quantity: ", update)
+    res.status(200).json({ message: "Quantity Updated" })
+  } catch (error) {
+    console.log("Error: ", error)
   }
 });
 
@@ -274,7 +293,7 @@ app.post("/api/login", async (req, res) => {
   try {
     const { email, Inputpassword } = req.body;
     console.log(email, Inputpassword);
-    const user = await User.find({ email: email });
+    const user = await User.findOne({ email: email, Google_Login: false });
     console.log(user);
     console.log(user.length);
 
@@ -283,10 +302,10 @@ app.post("/api/login", async (req, res) => {
       res.status(404).json({ message: "User not found" });
     }
 
-    const HashedPassword = user[0].password;
+    const HashedPassword = user?.password;
     const password = await bcrypt.compare(Inputpassword, HashedPassword);
 
-    console.log(password);
+    console.log(user._id);
 
     if (password) {
       const token = jwt.sign(
@@ -295,9 +314,11 @@ app.post("/api/login", async (req, res) => {
         { expiresIn: "1h" }
       );
       res.cookie("token", token, {
-        httpOnly: true,
-        maxAge: 3600000,
-        secure: false,
+      httpOnly: true,
+      maxAge: 3600000,
+      secure: true,
+      sameSite: "None",
+      partitioned: true
       });
       res.status(200).json({ message: "Login Successfull" });
     } else if (!password) {
@@ -411,9 +432,15 @@ app.post("/api/google-signup", async (req, res) => {
 });
 
 // Logout
-app.post("/api/Logout", (req, res) => {
+app.post("/api/Logout", verifyToken, (req, res) => {
   // console.log(req.user)
-  res.clearCookie("token");
+  res.clearCookie("token", {
+      httpOnly: true,
+      maxAge: 3600000,
+      secure: true,
+      sameSite: "None",
+      partitioned: true
+    });
   res.status(200).json({ message: "User Logged Out Successfully" });
 });
 
@@ -431,7 +458,7 @@ app.post("/api/order", verifyToken, async (req, res) => {
       userDetails: user,
       productDetails: cartProduct,
       total_amount,
-      quantity,
+      // quantity,
     });
 
     // const order = await Order.find({ "userDetails._id": req.user._id })

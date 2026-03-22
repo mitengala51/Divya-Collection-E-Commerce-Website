@@ -1,8 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import Navbar from "../Components/Layout/Navbar";
 import Footer from "../Components/Layout/Footer";
 import CartProduct from "../Components/Cart/CartProduct";
 import TotalCartTable from "../Components/Cart/TotalCartTable";
+import { LoggedIn } from "../Components/context/loggedIn";
+import Loader from "../Components/Common/Loader";
 import axios from "axios";
 
 export default function ShoppingCartPage() {
@@ -10,11 +12,15 @@ export default function ShoppingCartPage() {
   const [totalPrice, setTotalPrice] = useState([]);
   const [cartDeleted, setCartDeleted] = useState(false);
   const [OrderQuantity, setOrderQuantity] = useState(1);
-  const [volume, setVolume] = useState(1)
+  const [volume, setVolume] = useState(1);
+  const [loading, setLoading] = useState(false)
+
+  const { loggedIn } = useContext(LoggedIn)
 
   useEffect(() => {
     async function fetchdata() {
       try {
+        setLoading(true)
         const data = await axios.get(
           `${import.meta.env.VITE_REACT_APP_API_URL}/api/cart-items`,
           {
@@ -29,12 +35,23 @@ export default function ShoppingCartPage() {
         );
         // console.log("Cost: ",cost)
         setTotalPrice(cost);
+        // console.log("loggedIn: ", loggedIn)
       } catch (error) {
         console.log(error);
+        if(error.status === 401){
+          setCartItems([]);
+          setTotalPrice(0)
+        }
+      }finally{
+        setLoading(false)
       }
     }
     fetchdata();
-  }, [cartDeleted]);
+  }, [cartDeleted, loggedIn]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <div className="w-100">
@@ -73,7 +90,7 @@ export default function ShoppingCartPage() {
             })}
           </div>
           <div className="col-lg-4">
-            <TotalCartTable totalItems={cartItems.length} price={totalPrice} quantity={OrderQuantity}/>
+            <TotalCartTable totalItems={cartItems.length} price={totalPrice} quantity={OrderQuantity} />
           </div>
         </div>
       </div>
