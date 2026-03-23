@@ -9,22 +9,22 @@ A modern, full-stack e-commerce platform specializing in handbags and ladies' fo
 ## 📸 Screenshots
 
 ### Homepage
-![Homepage](c:\Users\ADMIN\Downloads\Screenshot_21-3-2026_20373_localhost.jpeg)
+![Homepage](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/homepage.jpeg)
 
 ### Product Search
-![Product Catalog](c:\Users\ADMIN\Downloads\Screenshot_21-3-2026_203740_localhost.jpeg)
+![Product Search](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/product%20search.jpeg)
 
 ### Product Details
-![Product Details](c:\Users\ADMIN\Downloads\Screenshot_21-3-2026_204233_localhost.jpeg)
+![Product Details](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/product%20detail.jpeg)
 
 ### About Us
-![About Us](c:\Users\ADMIN\Downloads\Screenshot_21-3-2026_203754_localhost.jpeg)
+![About Us](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/about%20us.jpeg)
 
 ### Contact Us
-![Contact Us](c:\Users\ADMIN\Downloads\Screenshot_21-3-2026_203817_localhost.jpeg)
+![Contact Us](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/contact%20us.jpeg)
 
 ### Shopping Cart
-![Shopping Cart](c:\Users\ADMIN\Downloads\Screenshot_22-3-2026_192826_localhost.jpeg)
+![Shopping Cart](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/shopping%20cart.jpeg)
 
 
 ## �🌟 Features
