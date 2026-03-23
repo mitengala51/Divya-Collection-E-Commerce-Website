@@ -176,6 +176,7 @@ divya-collection-ecommerce/
 ### Cart
 - `POST /api/add-to-cart` - Add item to cart (requires authentication)
 - `GET /api/cart-items` - Get user's cart items (requires authentication)
+- `POST /api/quantity` - Update item quantity in cart (requires authentication)
 - `DELETE /api/delete-cart-item/:id` - Remove item from cart
 
 ### Orders
