@@ -9,22 +9,34 @@ A modern, full-stack e-commerce platform specializing in handbags and ladies' fo
 ## 📸 Screenshots
 
 ### Homepage
-![Homepage](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/homepage.jpeg)
+<!-- ![Homepage](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/homepage.jpeg) -->
+
+<img src="https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/homepage.jpeg" width="200" height="200"></img>
 
 ### Product Search
-![Product Search](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/product%20search.jpeg)
+<!-- ![Product Search](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/product%20search.jpeg) -->
+
+<img src="https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/product%20search.jpeg" width="200" height="200"></img>
 
 ### Product Details
-![Product Details](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/product%20detail.jpeg)
+<!-- ![Product Details](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/product%20detail.jpeg) -->
+
+<img src="https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/product%20detail.jpeg" width="200" height="200"></img>
 
 ### About Us
-![About Us](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/about%20us.jpeg)
+<!-- ![About Us](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/about%20us.jpeg) -->
+
+<img src="https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/about%20us.jpeg" width="200" height="200">
 
 ### Contact Us
-![Contact Us](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/contact%20us.jpeg)
+<!-- ![Contact Us](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/contact%20us.jpeg) -->
+
+<img src="https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/contact%20us.jpeg" width="200" height="200">
 
 ### Shopping Cart
-![Shopping Cart](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/shopping%20cart.jpeg)
+<!-- ![Shopping Cart](https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/shopping%20cart.jpeg) -->
+
+<img src="https://github.com/mitengala51/Divya-Collection-E-Commerce-Website/blob/main/frontend/public/Website%20Screenshots/shopping%20cart.jpeg" width="200" height="200">
 
 
 ## �🌟 Features
